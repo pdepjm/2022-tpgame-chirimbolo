@@ -1,8 +1,9 @@
 import wollok.game.*
-import pepita.*
+import configs.*
 
 program juego {
-	game.title("Juego Base")
-	game.addVisual(pepita)
+	config.configs()
+	game.schedule(1,{marPantalla.inicializar()})
+	game.schedule(300,{config.acciones()})
 	game.start()
 }
