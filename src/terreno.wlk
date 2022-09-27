@@ -1,23 +1,25 @@
-import merry.*
+import personajes.*
 import isla.*
 import wollok.game.*
-import personajes.*
+import configs.*
+import jugador.*
 
 object terreno {
-	const random = (1.randomUpTo(5)).roundUp()
-	var pantallas = 0
+	const random = (1.randomUpTo(1)).roundUp()
+	var pantallas = 1
 	
-	method pantallas() = pantallas++
-	
-	method cambioDePantalla() {pantallas = 0}
-	
-	method generarIsla(){
-		if (pantallas == random){
-			game.addVisual(isla)
+	method pantallas() {
+		if (pantallas == random && jugador.pantallaActual() == mar) game.addVisual(choque)
+		else if (pantallas == random && jugador.pantallaActual() == isla) {
+			game.addVisual(enemigo1)
+			enemigo1.atacar()	
 		}
+		return pantallas++
 	}
 	
-	method generarEnemigos(){
+	method cambioDePantalla() {pantallas = 1}
+	
+	/*method generarEnemigos(){
 		random.times({a => game.at(a + random, random - a).drawElement(enemigo)})
-	}
+	}*/
 }

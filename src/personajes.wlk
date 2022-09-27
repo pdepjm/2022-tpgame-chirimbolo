@@ -1,45 +1,81 @@
 import wollok.game.*
-import movimiento.*
 import terreno.*
+import movimiento.*
+import configs.*
+import jugador.*
 
-object luffy {
-	var position = game.origin()
-	var imagen = "assets/luffyQuieto.png"
+class Personaje{
+	var position = game.at(0,3)
+	var imageIzq
+	var imageDer
+	var image = imageIzq
+	var habilidad
 	
-	method image() = imagen
-	method image(imagenNueva) { imagen = imagenNueva }
+	method image() = image
+	method image(imagenNueva) { image = imagenNueva }
+	
 	method position() = position
-	method position(posicion) {position = posicion}
 	
-	method teclas(){
-		keyboard.shift().onPressDo{self.atacar()}
-		keyboard.w().onPressDo({self.moverA(arriba)})
-		keyboard.a().onPressDo({self.moverA(izquierda)})
-		keyboard.s().onPressDo({self.moverA(abajo)})
-		keyboard.d().onPressDo({self.moverA(derecha)})
-	}
-	
-	method moverA(dir){
-		if (dir == derecha){self.image("assets/luffyCorriendoDer.png")}
-		else {self.image("assets/luffyCorriendoIzq.png")}
+	method moverA(dir) {
+		if (dir == derecha){self.image(imageDer)}
+		else {self.image(imageIzq)}
 		
-		if (self.position() == game.at(game.width(),3)){
-			position = game.at(0,3)
+		if (self.position().x() > game.width()){
+			position = game.at(0,position.y())
 			terreno.pantallas()
-			terreno.generarEnemigos()
 		}
 		position = dir.siguientePosicion(position)
 	}
 	
-	method atacar() {
-		self.image("assets/ataqueLuffy.gif")
+	method habilidadEspecial() {
+		self.image(habilidad)
+		if (jugador.personajeActual() == merry) {position = game.at(self.position().x() + 5, position.y())}
+	}
+	
+	method teclas(){
+		keyboard.w().onPressDo({self.moverA(arriba)})
+		keyboard.a().onPressDo({self.moverA(izquierda)})
+		keyboard.s().onPressDo({self.moverA(abajo)})
+		keyboard.d().onPressDo({self.moverA(derecha)})
+		keyboard.shift().onPressDo({self.habilidadEspecial()})
 	}
 }
 
-object enemigo {
-	var position = game.at(18,3)
+class Enemigo{
+	const image
+	const position = game.at(10,0)
 	
-	method image() = "assets/enemigo.png"
 	method position() = position
-	method position(nuevaPosicion) {position = nuevaPosicion}
+	
+	method image() = image
+	
+	method atacar(){
+		game.addVisual(projectil)
+		projectil.moverse()
+	}
 }
+
+object projectil{
+	var position = enemigo1.position()
+	
+	method position() = position
+	method position(nueva) {position = nueva}
+	
+	method image() = "assets/sol.png"
+	
+	method moverse(){
+		if (self.position().x() < jugador.personajeActual().position().x()){
+			position = game.at(self.position().x() - 1, position.y())
+		}
+		else{
+			game.removeVisual(self)
+		}
+	}
+}
+
+
+
+
+
+
+

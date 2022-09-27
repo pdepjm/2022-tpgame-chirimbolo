@@ -1,10 +1,26 @@
 import wollok.game.*
 import personajes.*
-import merry.*
+import isla.*
+import jugador.*
+import terreno.*
+
+const merry = new Personaje(imageIzq="assets/merry.png",imageDer="assets/merry.png", habilidad="assets/merry.png")
+const luffy = new Personaje(imageIzq="assets/luffyCorriendoIzq.png",imageDer="assets/luffyCorriendoDer.png", habilidad="assets/ataqueLuffy.gif")
+const mar = new Pantalla(personajes=[merry],image="assets/marFondo.jpg")
+const isla = new Pantalla(personajes=[luffy], image="assets/desembarco.jpg")
+
+const enemigo1 = new Enemigo(image = "assets/enemigo.png")
+const enemigo2 = new Enemigo(image = "assets/enemigo.png")
+const enemigo3 = new Enemigo(image = "assets/enemigo.png")
+
 
 object config {
 	method acciones(){
-		game.onCollideDo(merry, {isla => isla.desembarcar()})
+		game.onCollideDo(merry, {chocado => 
+			choque.desembarcar()
+			jugador.cambiarPantalla(isla)
+			terreno.cambioDePantalla()
+		})
 	}
 	
 	method configs(){
@@ -16,27 +32,23 @@ object config {
 	}
 }
 
-object marPantalla {
+class Pantalla{
+	const personajes
+	const image
+	const fondo = new Fondo(imagen=image)
+	
+	method personajes() = personajes
+	
 	method inicializar(){
-		game.at(0,0).drawElement(fondos)
-		game.at(25,10).drawElement(sol)
-		game.addVisual(merry)
-		merry.teclas()
+		game.at(0,0).drawElement(fondo)
+		personajes.forEach({personaje => game.addVisual(personaje)})
+		personajes.forEach({personaje => personaje.teclas()})
 	}
+	
 }
 
-object islaPantalla {
-	method inicializar(){
-		fondos.image("assets/desembarco.jpg")
-		game.at(0,0).drawElement(fondos)
-		game.addVisualIn(merry,game.at(0,10))
-		luffy.teclas()
-		game.addVisual(luffy)
-	}
-}
-
-object fondos {
-	var imagen = "assets/1.jpg"
+class Fondo {
+	var imagen
 	
 	method image() = imagen
 	method image(image) {imagen = image}

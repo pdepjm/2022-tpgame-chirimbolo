@@ -1,9 +1,11 @@
 import wollok.game.*
 import configs.*
+import personajes.*
 
 program juego {
 	config.configs()
-	game.schedule(1,{marPantalla.inicializar()})
+	game.schedule(1,{mar.inicializar()})
+	game.schedule(1,{game.at(25,10).drawElement(sol)})
 	game.schedule(300,{config.acciones()})
 	game.start()
 }

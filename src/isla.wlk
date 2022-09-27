@@ -1,9 +1,8 @@
 import wollok.game.*
-import merry.*
 import personajes.*
 import configs.*
 
-object isla {
+object choque {
 	const position = game.at(15,0)
 	
 	method position() = position
@@ -11,6 +10,6 @@ object isla {
 	
 	method desembarcar(){
 		game.clear()
-		islaPantalla.inicializar()
+		isla.inicializar()
 	}
 }
