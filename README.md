@@ -1,10 +1,11 @@
-# Nombre del juego (<- borrar y completar)
+# Two Piece
 
 ## Equipo de desarrollo
 
-- Alguien
-- Persona
-- etc.
+- Juan Martin Vazquez
+- Franco Pesce
+- Camila Grisel Barros Albarracin
+- Mateo Agustin Romano
 
 ## Capturas
 
