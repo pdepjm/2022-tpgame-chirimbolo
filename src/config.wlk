@@ -1,5 +1,6 @@
 import wollok.game.*
 import jugador.*
+import mundo.*
 
 object config {
     method config(){
@@ -11,14 +12,12 @@ object config {
     }
     
     method actions(){
-    	game.onCollideDo(jugador.personajeActual(), {elementoChocado =>
-    		elementoChocado.desembarcar(elementoChocado)
-    	})
+    	game.onCollideDo(jugador.personajeActual(), {chocado => chocado.chocasteConJugador()})
     }
     
     method setPersonaje(){
     	jugador.personajeActual().teclas()
 		game.addVisual(jugador.personajeActual())
-        jugador.vida().times({a => game.addVisual(new Corazon(position = game.at(0 + a,18)))})
+        jugador.mostrarVidas()
     }
 }

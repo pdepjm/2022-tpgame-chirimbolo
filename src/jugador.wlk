@@ -1,10 +1,11 @@
 import wollok.game.*
 import mundo.*
+import config.*
 
 object jugador {
 	var personajeActual = null
 	var islaActual = null
-	var vida = 5
+	const vida = [cora1, cora2, cora3, cora4, cora5]
 	
 	method personajeActual() = personajeActual
     method islaActual() = islaActual
@@ -12,15 +13,43 @@ object jugador {
 
     method cambiarPersonaje(personaje) {personajeActual = personaje}
     method cambiarIsla(isla) {islaActual = isla}
-    method perderVida() = vida--
+    method perderVida() {
+    	game.say(self.personajeActual(), "AUCH!")
+    	self.borrarVidas()
+    	vida.remove(vida.last())
+    	self.perdiste()
+    	self.mostrarVidas()
+    }
+    method borrarVidas() {
+    	vida.forEach({cora => game.removeVisual(cora)})
+    }
+    method mostrarVidas() {
+    	vida.forEach({cora => game.addVisual(cora)})
+    }
+    method perdiste() {
+    	if (vida.isEmpty()) {
+    		game.clear()
+    		game.addVisual(perder)
+    		game.say(perder, "PERDISTE!")
+    		game.schedule(5000, {game.stop()})
+    	}
+    }
+    method ganaste() {
+    	if (mundo.estanTodasCompletadas()) {
+    		game.clear()
+    		game.addVisual(ganar)
+    		game.say(ganar, "GANASTE!")
+    		game.schedule(5000, {game.stop()})
+    	}
+    }
 }
 
 class Personaje{
     var image
-    var position
+    var property position
+    var property positionAnterior
 
     method image() = image
-    method position() = position
 
     method teclas(){
 		keyboard.w().onPressDo({self.moverA(arriba)})
@@ -29,23 +58,30 @@ class Personaje{
 		keyboard.d().onPressDo({self.moverA(derecha)})
     }
 
-	method checkearBordes(){
-        if (jugador.islaActual().bordes() == 1) position = game.at(position.x() + 1, position.y())
-        if (jugador.islaActual().bordes() == -1) position = game.at(position.x() - 1, position.y())
-        if (jugador.islaActual().bordes() == 2) position = game.at(position.x(), position.y() + 2 - 1)
-        if (jugador.islaActual().bordes() == -2) position = game.at(position.x(), position.y() - 2 + 1)
-        
-		if (position.x() < 0) position = game.at(0, position.y())
-        if (position.x() > game.width()) position = game.at(game.width(), position.y())
-        if (position.y() < 0) position = game.at(position.x(), 0) 
-        if (position.y() > game.height()) position = game.at(position.x(), game.height())
-	}
-
     method moverA(dir) {
-		self.checkearBordes()
-		position = dir.siguientePosicion(position)
+    	positionAnterior = position
+    	position = dir.siguientePosicion(position)
+		if (bordes.estaEnBorde(position)) {position = positionAnterior}
+	}
+	
+	method chocaBloque() {
+		position = positionAnterior
 	}
 }
+
+object perder {
+	method image() = "perder.jpg"
+	method position() = game.center()
+}
+
+object ganar {
+	method image() = "ganar.jpg"
+	method position() = game.center()
+}
+
+object bordes {
+	method estaEnBorde(position) = position.x() < 0 || position.x() > game.width() - 1 || position.y() < 0 || position.y() > game.height() - 1
+} // no se que le pasa que me subraya lo de arriba, pero anda :)
 
 object arriba {
 	method siguientePosicion(pos) = pos.up(1) 	
@@ -66,4 +102,12 @@ class Corazon {
 	
 	method image() = image
 	method position() = position
+	
+	method chocasteConJugador() = null
 }
+
+const cora1 = new Corazon(position = game.at(1, 18))
+const cora2 = new Corazon(position = game.at(2, 18))
+const cora3 = new Corazon(position = game.at(3, 18))
+const cora4 = new Corazon(position = game.at(4, 18))
+const cora5 = new Corazon(position = game.at(5, 18))
