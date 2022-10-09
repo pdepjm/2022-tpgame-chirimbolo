@@ -1,11 +1,12 @@
 import wollok.game.*
-import configs.*
-import personajes.*
+import config.*
+import mundo.*
+import jugador.*
 
 program juego {
-	config.configs()
-	game.schedule(1,{mar.inicializar()})
-	game.schedule(1,{game.at(25,10).drawElement(sol)})
-	game.schedule(300,{config.acciones()})
+	mar.configIsla(mar) // setea el mar
+	config.config() // configuraciones tecnicas
+	config.actions() // configuraciones de coliciones
+	mundo.mostrarIslas() // mostrar las islas en el mar
 	game.start()
 }
