@@ -43,7 +43,7 @@ object mar{
 
 object moneda {
 	method image() = "moneda.jpg"
-	method position() = game.at(9, 9)
+	method position() = game.at(9, 10)
 	
 	method chocasteConJugador() {
 		jugador.ganaste()
@@ -67,6 +67,8 @@ object islaEnemigos{
 		config.setPersonaje() // configura el personaje
 		config.config() // configura la pantalla
 		config.actions()
+		game.schedule(5000, {game.onCollideDo(piedra, {chocado => chocado.chocasteConPiedra()})})
+		jugador.personajeActual().habilitadoATirarPiedra()
 	}
 	
 	method chocasteConJugador(){
@@ -80,18 +82,49 @@ object islaEnemigos{
     		enemigo1.moverRandom()
     		enemigo1.disparar()
     	})
-    	game.addVisualIn(mar, game.center().left(5))
-    	islaLaberinto.crearColumna(20, 20, 0)
-    	islaLaberinto.crearColumna(20, 21, 0)
-    	islaLaberinto.crearColumna(20, 22, 0)
-    	islaLaberinto.crearColumna(20, 23, 0)
-    	islaLaberinto.crearColumna(20, 24, 0)
+    	game.schedule(5000, {piedra.spawnear()})
+	}
+}
+
+object piedra {
+	var position
+	
+	method position() = position
+	method image() = "piedra.jpg"
+	method chocasteConJugador() {
+		game.removeVisual(self)
+	}
+	method mover() {
+		position = position.right(1)
+	}	
+	method tirar() {
+		game.addVisualIn(self, jugador.personajeActual().position().right(1))
+		game.onTick(500, "revoleando piedra", {self.mover()})
+	}
+	
+	method spawnear() {
+		position = game.at((-0.5).randomUpTo(18.5).roundUp(), (-0.5).randomUpTo(18.5).roundUp())
+		game.addVisual(self)
 	}
 }
 
 class Enemigo {
 	var property image
 	var property position
+	var vivo = true
+	
+	method morir() {
+		vivo = false
+	}
+	method estaVivo() = vivo
+	
+	method chocasteConPiedra() {
+		self.morir()
+		game.removeVisual(self)
+		if (enemigos.todosMuertos()) {
+			game.addVisualIn(mar, game.center().left(5))
+		}
+	}
 	
 	method moverRandom() {
 		position = game.at((24.5).randomUpTo(33.5).roundUp(), (-0.5).randomUpTo(18.5).roundUp())
@@ -104,6 +137,13 @@ class Enemigo {
 }
 
 const enemigo1 = new Enemigo(image = "merry.jpg", position = game.at(29, 9))
+const enemigo2 = new Enemigo(image = "merry.jpg", position = game.at(29, 9))
+const enemigo3 = new Enemigo(image = "merry.jpg", position = game.at(29, 9))
+object enemigos {
+	const enemigos = [enemigo1, enemigo2, enemigo3]
+	
+	method todosMuertos() = enemigos.all({enemigo => !enemigo.estaVivo()})
+}
 
 class Proyectil {
 	const property image = "merry.jpg"
@@ -116,6 +156,7 @@ class Proyectil {
 		jugador.perderVida()
 		game.removeVisual(self)
 	}
+	method chocasteConPiedra() {}
 }
 
 object islaLaberinto{

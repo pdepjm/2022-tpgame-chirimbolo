@@ -48,6 +48,7 @@ class Personaje{
     var image
     var property position
     var property positionAnterior
+    var property piedraEnMano = false
 
     method image() = image
 
@@ -66,6 +67,20 @@ class Personaje{
 	
 	method chocaBloque() {
 		position = positionAnterior
+	}
+	
+	method chocasteConPiedra() {
+		// cambiar foto del jugador
+		self.piedraEnMano(true)
+	}
+	method habilitadoATirarPiedra() {
+		keyboard.space().onPressDo({
+			if (self.piedraEnMano()) {
+				piedra.tirar()
+				self.piedraEnMano(false)
+				
+			}
+		})
 	}
 }
 
