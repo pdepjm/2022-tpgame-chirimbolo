@@ -67,8 +67,6 @@ object islaEnemigos{
 		config.setPersonaje() // configura el personaje
 		config.config() // configura la pantalla
 		config.actions()
-		game.schedule(5000, {game.onCollideDo(piedra, {chocado => chocado.chocasteConPiedra()})})
-		jugador.personajeActual().habilitadoATirarPiedra()
 	}
 	
 	method chocasteConJugador(){
@@ -83,6 +81,7 @@ object islaEnemigos{
     		enemigo1.disparar()
     	})
     	game.schedule(5000, {piedra.spawnear()})
+    	islaLaberinto.crearColumna(20, 23, 0)
 	}
 }
 
@@ -90,21 +89,26 @@ object piedra {
 	var position
 	
 	method position() = position
-	method image() = "piedra.jpg"
+	method image() = "merry.jpg"
+	
 	method chocasteConJugador() {
 		game.removeVisual(self)
+		jugador.personajeActual().piedraEnMano(true)
+		jugador.personajeActual().habilitadoATirarPiedra() // se podria hacer un metodo en Personaje para que la piedra no se meta con el personaje (delegar)
 	}
 	method mover() {
 		position = position.right(1)
 	}	
 	method tirar() {
-		game.addVisualIn(self, jugador.personajeActual().position().right(1))
+		position = jugador.personajeActual().position().right(1)
+		game.addVisual(self)
 		game.onTick(500, "revoleando piedra", {self.mover()})
 	}
 	
 	method spawnear() {
 		position = game.at((-0.5).randomUpTo(18.5).roundUp(), (-0.5).randomUpTo(18.5).roundUp())
 		game.addVisual(self)
+		game.onCollideDo(self, {chocado => chocado.chocasteConPiedra()})
 	}
 }
 

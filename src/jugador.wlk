@@ -70,15 +70,13 @@ class Personaje{
 	}
 	
 	method chocasteConPiedra() {
-		// cambiar foto del jugador
-		self.piedraEnMano(true)
 	}
+	
 	method habilitadoATirarPiedra() {
 		keyboard.space().onPressDo({
 			if (self.piedraEnMano()) {
 				piedra.tirar()
 				self.piedraEnMano(false)
-				
 			}
 		})
 	}
@@ -118,7 +116,7 @@ class Corazon {
 	method image() = image
 	method position() = position
 	
-	method chocasteConJugador() = null
+	method chocasteConJugador() {}
 }
 
 const cora1 = new Corazon(position = game.at(1, 18))
