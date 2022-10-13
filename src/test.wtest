@@ -9,7 +9,7 @@ describe "tests de la isla enemigos" {
 	}
 	
 	test "perderVida() saca vida a jugador" {
-		jugador.perderVida()
+		jugador.perderVida() // cambiar metodo sin wollok games
 		const ultimo = jugador.vida().last()
 		assert.that(ultimo === cora4)
 	}

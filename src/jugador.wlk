@@ -117,6 +117,7 @@ class Corazon {
 	method position() = position
 	
 	method chocasteConJugador() {}
+	method chocasteConPiedra() {}
 }
 
 const cora1 = new Corazon(position = game.at(1, 18))

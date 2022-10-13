@@ -52,7 +52,7 @@ object moneda {
 
 object islaEnemigos{
 	const property image = "islaEnemigos.png"
-	const property position = game.at(30,17) // 30, 17
+	const property position = game.at(3,3) // 30, 17
 	var completada = false
 	
 	method completarIsla() {
@@ -76,11 +76,13 @@ object islaEnemigos{
 	
 	method cargar(){
 		game.addVisual(enemigo1)
-		game.onTick(2000, "movimiento enemigo", {
-    		enemigo1.moverRandom()
-    		enemigo1.disparar()
-    	})
     	game.schedule(5000, {piedra.spawnear()})
+		/*enemigos.lista().forEach({enemigo => 
+			game.onTick(2000, "movimiento enemigo", {
+    		enemigo.moverRandom()
+    		enemigo.disparar()
+    	})
+		})*/
     	islaLaberinto.crearColumna(20, 23, 0)
 	}
 }
@@ -102,13 +104,21 @@ object piedra {
 	method tirar() {
 		position = jugador.personajeActual().position().right(1)
 		game.addVisual(self)
-		game.onTick(500, "revoleando piedra", {self.mover()})
+		game.onTick(100, "revoleando piedra", {self.mover()})
+		game.onTick(5000, "chequeo piedra en borde", {self.piedraEnBorde()})
 	}
 	
 	method spawnear() {
 		position = game.at((-0.5).randomUpTo(18.5).roundUp(), (-0.5).randomUpTo(18.5).roundUp())
 		game.addVisual(self)
 		game.onCollideDo(self, {chocado => chocado.chocasteConPiedra()})
+	}
+	method piedraEnBorde() {
+		if (bordes.estaEnBorde(position)) {
+			game.removeVisual(self)
+			game.removeTickEvent("revoleando piedra")
+			self.spawnear()
+		}
 	}
 }
 
@@ -125,6 +135,9 @@ class Enemigo {
 	method chocasteConPiedra() {
 		self.morir()
 		game.removeVisual(self)
+		game.removeVisual(piedra)
+		game.removeTickEvent("revoleando piedra")
+		game.schedule(5000, {piedra.spawnear()})
 		if (enemigos.todosMuertos()) {
 			game.addVisualIn(mar, game.center().left(5))
 		}
@@ -136,15 +149,20 @@ class Enemigo {
 	method disparar() {
 		const proyectil = new Proyectil(position = position.left(1))
 		game.addVisual(proyectil)
-		game.onTick(500, "movimiento proyectil", {proyectil.mover()})
+		game.onTick(500, "movimiento proyectil", {
+			proyectil.mover()
+			
+		})
 	}
 }
 
 const enemigo1 = new Enemigo(image = "merry.jpg", position = game.at(29, 9))
-const enemigo2 = new Enemigo(image = "merry.jpg", position = game.at(29, 9))
-const enemigo3 = new Enemigo(image = "merry.jpg", position = game.at(29, 9))
+//const enemigo2 = new Enemigo(image = "merry.jpg", position = game.at(29, 10))
+//const enemigo3 = new Enemigo(image = "merry.jpg", position = game.at(29, 11))
+
 object enemigos {
-	const enemigos = [enemigo1, enemigo2, enemigo3]
+	const enemigos = [enemigo1]
+	method lista() = enemigos
 	
 	method todosMuertos() = enemigos.all({enemigo => !enemigo.estaVivo()})
 }
@@ -160,6 +178,14 @@ class Proyectil {
 		jugador.perderVida()
 		game.removeVisual(self)
 	}
+	/*
+	 * method proyectilEnBorde() {
+		if (bordes.estaEnBorde(position)) {
+			game.removeVisual(self)
+		}
+	}
+	 */
+	
 	method chocasteConPiedra() {}
 }
 
@@ -180,6 +206,7 @@ object islaLaberinto{
 		config.setPersonaje()
 		config.config()
 		config.actions()
+		reloj.empezar()
 	}
 	
 	method chocasteConJugador(){
@@ -190,6 +217,7 @@ object islaLaberinto{
 	method cargar() {	
 		self.crearLaberinto()
 		game.addVisualIn(mar, game.at(34, 18))
+		game.addVisual(reloj)
 	}
 	
 	method crearLaberinto() { // creando el laberinto
@@ -320,6 +348,31 @@ object islaLaberinto{
 	
 }
 
+object reloj {
+	var property segundos = 30
+	
+	method descontar() {
+		segundos -= 1
+	}
+	
+	method position() = game.at(22,19)
+	
+	method text() = "tiempo: " + segundos
+	
+	method reiniciar() {
+		segundos = 30
+	}
+	method empezar() {
+		game.onTick(1000, "descontar segundo", {
+			self.descontar()
+		})
+		game.onTick(30000, "Reiniciar reloj y perder vida", {
+			self.reiniciar()
+			jugador.perderVida()
+		})
+	}
+}
+
 object islaAcertijo{
 	const property image = "islaAcertijo.png"
 	const property position = game.at(25,10) // 30, 17
@@ -359,4 +412,5 @@ class Bloque {
 	method chocasteConJugador() {
 		jugador.personajeActual().chocaBloque()
 	}
+	method chocasteConPiedra() {}
 }
