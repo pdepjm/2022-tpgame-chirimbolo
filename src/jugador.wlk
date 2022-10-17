@@ -1,6 +1,7 @@
 import wollok.game.*
 import mundo.*
 import config.*
+import islaEnemigos.*
 
 object jugador {
 	var personajeActual = null
@@ -62,15 +63,16 @@ class Personaje{
     method moverA(dir) {
     	positionAnterior = position
     	position = dir.siguientePosicion(position)
-		if (bordes.estaEnBorde(position)) {position = positionAnterior}
+    	if (bordes.estaEnBorde(position)) {
+    		position = positionAnterior
+    	}
 	}
 	
 	method chocaBloque() {
 		position = positionAnterior
 	}
 	
-	method chocasteConPiedra() {
-	}
+	method chocasteConPiedra() {}
 	
 	method habilitadoATirarPiedra() {
 		keyboard.space().onPressDo({
@@ -91,10 +93,6 @@ object ganar {
 	method image() = "ganar.jpg"
 	method position() = game.center()
 }
-
-object bordes {
-	method estaEnBorde(position) = position.x() < 0 || position.x() > game.width() - 1 || position.y() < 0 || position.y() > game.height() - 1
-} // no se que le pasa que me subraya lo de arriba, pero anda :)
 
 object arriba {
 	method siguientePosicion(pos) = pos.up(1) 	

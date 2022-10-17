@@ -4,9 +4,8 @@ import mundo.*
 import jugador.*
 
 program juego {
-	mar.configIsla() // setea el mar
+	mundo.configIsla() // setea el mar
 	config.config() // configuraciones tecnicas
 	config.actions() // configuraciones de coliciones
-	mundo.mostrarIslas() // mostrar las islas en el mar
 	game.start()
 }
