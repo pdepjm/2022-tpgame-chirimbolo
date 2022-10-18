@@ -15,8 +15,8 @@ object islaLaberinto{
 	
 	method configIsla(){
 		game.clear()
-		jugador.cambiarIsla(self)
-		jugador.cambiarPersonaje(new Personaje(image="luffyQuieto.jpg", position = game.at(0, (game.height() / 2) - 1), positionAnterior = null))
+		stats.cambiarIsla(self)
+		stats.cambiarPersonaje(new Personaje(image="luffyQuieto.jpg", position = game.at(0, (game.height() / 2) - 1), positionAnterior = null))
 		config.setPersonaje()
 		config.config()
 		config.actions()
@@ -166,7 +166,7 @@ object reloj {
 	
 	method position() = game.at(22,19)
 	
-	method text() = "tiempo: " + segundos
+	method text() = "tiempo: " + segundos.toString()
 	
 	method reiniciar() {
 		segundos = 30
@@ -177,7 +177,7 @@ object reloj {
 		})
 		game.onTick(30000, "Reiniciar reloj y perder vida", {
 			self.reiniciar()
-			jugador.perderVida()
+			stats.perderVida()
 		})
 	}
 }

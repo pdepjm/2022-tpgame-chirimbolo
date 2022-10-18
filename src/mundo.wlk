@@ -23,8 +23,8 @@ object mundo{
 	
 	method configIsla(){
 		game.clear() // borra todo lo que hay en la pantalla
-		jugador.cambiarIsla(self) // cambia la isla del jugador
-		jugador.cambiarPersonaje(new Personaje(image="merry.jpg", position = game.center(), positionAnterior = null)) // cambia el personaje del jugador
+		stats.cambiarIsla(self) // cambia la isla del jugador
+		stats.cambiarPersonaje(new Personaje(image="merry.jpg", position = game.center(), positionAnterior = null)) // cambia el personaje del jugador
 		config.setPersonaje() // configura el personaje
 		config.config() // configura la pantalla
 		config.actions()
@@ -34,10 +34,11 @@ object mundo{
 		if (self.estanTodasCompletadas()) game.addVisual(moneda)
 	}
 	method chocasteConJugador() {
-		jugador.islaActual().completarIsla()
+		stats.islaActual().completarIsla()
 		self.configIsla()
 		self.cargar()
 	}
+	method chocasteConPiedra() {}
 }
 
 object moneda {
@@ -45,7 +46,7 @@ object moneda {
 	method position() = game.at(9, 10)
 	
 	method chocasteConJugador() {
-		jugador.ganaste()
+		stats.ganaste()
 	}
 }
 
@@ -64,6 +65,9 @@ object bordes {
 	method crearColumna(cant, startingX, startingY) {
 		cant.times({a => game.addVisual(new Bloque(image = "bloque.jpg", position = game.at(startingX, startingY - 1 + a)))})
 	}
+	method crearRio(cant, startingX, startingY) { // sabemos que son iguales, por favor no nos hagan modificar todos los mensajes del laberito :(
+		cant.times({a => game.addVisual(new Bloque(image = "merry.jpg", position = game.at(startingX, startingY - 1 + a)))})
+	} // cambiar imagen
 	
 	method estaEnBorde(position) = position.x() < 0 || position.x() > game.width() - 1 || position.y() < 0 || position.y() > game.height() - 1
 }
@@ -76,7 +80,7 @@ class Bloque {
 	method position() = position
 	
 	method chocasteConJugador() {
-		jugador.personajeActual().chocaBloque()
+		stats.personajeActual().chocaBloque()
 	}
 	method chocasteConPiedra() {}
 }

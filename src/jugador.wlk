@@ -3,7 +3,7 @@ import mundo.*
 import config.*
 import islaEnemigos.*
 
-object jugador {
+object stats {
 	var personajeActual = null
 	var islaActual = null
 	const vida = [cora1, cora2, cora3, cora4, cora5]

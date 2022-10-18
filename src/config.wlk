@@ -12,12 +12,12 @@ object config {
     }
     
     method actions(){
-    	game.onCollideDo(jugador.personajeActual(), {chocado => chocado.chocasteConJugador()})
+    	game.onCollideDo(stats.personajeActual(), {chocado => chocado.chocasteConJugador()})
     }
     
     method setPersonaje(){
-    	jugador.personajeActual().teclas()
-		game.addVisual(jugador.personajeActual())
-        jugador.mostrarVidas()
+    	stats.personajeActual().teclas()
+		game.addVisual(stats.personajeActual())
+        stats.mostrarVidas()
     }
 }

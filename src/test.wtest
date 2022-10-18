@@ -5,12 +5,12 @@ import config.*
 
 describe "tests de la isla enemigos" {
 	method initialize() {
-		jugador.cambiarPersonaje(new Personaje(image="luffyQuieto.jpg", position = game.at(0, game.height() / 2), positionAnterior = null))
+		stats.cambiarPersonaje(new Personaje(image="luffyQuieto.jpg", position = game.at(0, game.height() / 2), positionAnterior = null))
 	}
 	
 	test "perderVida() saca vida a jugador" {
-		jugador.perderVida() // cambiar metodo sin wollok games
-		const ultimo = jugador.vida().last()
+		stats.perderVida() // cambiar metodo sin wollok games
+		const ultimo = stats.vida().last()
 		assert.that(ultimo === cora4)
 	}
 }

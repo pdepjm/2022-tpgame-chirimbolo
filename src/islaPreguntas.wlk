@@ -15,8 +15,8 @@ object islaPreguntas{
 	
 	method configIsla(){
 		game.clear()
-		jugador.cambiarIsla(self)
-		jugador.cambiarPersonaje(new Personaje(image="luffyQuieto.jpg", position = game.at(0, game.height() / 2), positionAnterior = null))
+		stats.cambiarIsla(self)
+		stats.cambiarPersonaje(new Personaje(image="luffyQuieto.jpg", position = game.at(0, game.height() / 2), positionAnterior = null))
 		config.setPersonaje()
 		config.config()
 		config.actions()
