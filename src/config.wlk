@@ -3,7 +3,7 @@ import jugador.*
 import mundo.*
 
 object config {
-    method config(){
+    method configuracionesTecnicas(){
         game.width(35)
         game.height(20)
         game.cellSize(50)

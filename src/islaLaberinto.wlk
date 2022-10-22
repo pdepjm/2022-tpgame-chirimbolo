@@ -4,22 +4,19 @@ import config.*
 import mundo.*
 
 object islaLaberinto{
-	const property image = "islaLaberinto.png"
-	const property position = game.at(30,3) // 30, 3
 	var completada = false
 	
+	method position() = game.at(30,3) // 30, 3
+	method image() = "islaLaberinto.png"
+
 	method completarIsla() {
 		completada = true
 	}
 	method estaCompletada() = completada
 	
 	method configIsla(){
-		game.clear()
-		stats.cambiarIsla(self)
-		stats.cambiarPersonaje(new Personaje(image="luffyQuieto.jpg", position = game.at(0, (game.height() / 2) - 1), positionAnterior = null))
-		config.setPersonaje()
-		config.config()
-		config.actions()
+		stats.cambiarPersonaje(new Personaje(image="luffyQuieto.jpg", position = game.at(0, (game.height() / 2) - 1)))
+		configBasicaIsla.configuraciones(self)
 		reloj.empezar()
 		//bordes.crear()
 	}
@@ -152,13 +149,10 @@ object islaLaberinto{
 		bordes.crearColumna(4, 33, 10)
 		bordes.crearColumna(16, 34, 0)
 	}
-	
-	
-	
 }
 
 object reloj {
-	var property segundos = 30
+	var segundos = 30
 	
 	method descontar() {
 		segundos -= 1
@@ -175,7 +169,7 @@ object reloj {
 		game.onTick(1000, "descontar segundo", {
 			self.descontar()
 		})
-		game.onTick(30000, "Reiniciar reloj y perder vida", {
+		game.onTick(segundos * 1000, "Reiniciar reloj y perder vida", {
 			self.reiniciar()
 			stats.perderVida()
 		})

@@ -22,16 +22,15 @@ object mundo{
 	method estaCompletada() = true
 	
 	method configIsla(){
-		game.clear() // borra todo lo que hay en la pantalla
-		stats.cambiarIsla(self) // cambia la isla del jugador
 		stats.cambiarPersonaje(new Personaje(image="merry.jpg", position = game.center(), positionAnterior = null)) // cambia el personaje del jugador
-		config.setPersonaje() // configura el personaje
-		config.config() // configura la pantalla
-		config.actions()
+		configBasicaIsla.configuraciones(self)
 		self.mostrarIslas()
 	}
 	method cargar() {
-		if (self.estanTodasCompletadas()) game.addVisual(moneda)
+		if (self.estanTodasCompletadas()) {
+			game.addVisual(moneda)
+			game.say(stats.personajeActual(), "Si agarro esa moneda brillante GANO!")
+		}
 	}
 	method chocasteConJugador() {
 		stats.islaActual().completarIsla()
@@ -39,6 +38,16 @@ object mundo{
 		self.cargar()
 	}
 	method chocasteConPiedra() {}
+}
+
+object configBasicaIsla {
+	method configuraciones(isla) {
+		game.clear()
+		stats.cambiarIsla(isla)
+		config.setPersonaje()
+		config.configuracionesTecnicas()
+		config.actions()
+	}
 }
 
 object moneda {

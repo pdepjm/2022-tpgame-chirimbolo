@@ -5,7 +5,5 @@ import jugador.*
 
 program juego {
 	mundo.configIsla() // setea el mar
-	config.config() // configuraciones tecnicas
-	config.actions() // configuraciones de coliciones
 	game.start()
 }

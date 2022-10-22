@@ -47,10 +47,11 @@ object stats {
 
 class Personaje{
     var image
-    var property position
-    var property positionAnterior
+    var position
+    var positionAnterior = null
     var property piedraEnMano = false
-
+    
+    method position() = position
     method image() = image
 
     method teclas(){

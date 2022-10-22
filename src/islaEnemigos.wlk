@@ -4,22 +4,19 @@ import config.*
 import mundo.*
 
 object islaEnemigos{
-	const property image = "islaEnemigos.png"
-	const property position = game.at(3,3) // 30, 17
 	var completada = false
 	
+	method position() = game.at(30,17) // 30, 17
+	method image() = "islaEnemigos.png"
+
 	method completarIsla() {
 		completada = true
 	}
 	method estaCompletada() = completada
 	
 	method configIsla(){
-		game.clear() // borra todo lo que hay en la pantalla
-		stats.cambiarIsla(self) // cambia la isla del jugador
-		stats.cambiarPersonaje(new Personaje(image="luffyQuieto.jpg", position = game.at(0, game.height() / 2), positionAnterior = null)) // cambia el personaje del jugador
-		config.setPersonaje() // configura el personaje
-		config.config() // configura la pantalla
-		config.actions()
+		stats.cambiarPersonaje(new Personaje(image="luffyQuieto.jpg", position = game.at(0, game.height() / 2))) // cambia el personaje del jugador
+		configBasicaIsla.configuraciones(self)
 		//bordes.crear()
 	}
 	
@@ -68,6 +65,7 @@ object piedra {
 		position = game.at((0).randomUpTo(18.5).roundUp(), (0).randomUpTo(15.5).roundUp())
 		game.addVisual(self)
 		game.onCollideDo(self, {chocado => chocado.chocasteConPiedra()})
+		game.say(stats.personajeActual(), "Spawneo otra piedra!")
 	}
 	method piedraEnBorde() {
 		if (bordes.estaEnBorde(position)) {
@@ -80,11 +78,14 @@ object piedra {
 }
 
 class Enemigo {
-	var property image
-	var property position
+	var image
+	var position
 	var positionAnterior = null
 	const nombre
 	var vivo = true
+	
+	method image() = image
+	method position() = position
 	
 	method nombre() = nombre
 	
@@ -188,25 +189,26 @@ object enemigos {
 }
 
 class Proyectil {
-	const property image = "merry.jpg"
-	var property position
+	var position
 	const nombre
 	
+	method position() = position
+	method image() = "merry.jpg"
 	method nombre() = nombre 
 
 	method mover() {
 		position = position.left(1)
 	}
 	method chocasteConJugador() {
-		stats.perderVida()
 		game.removeVisual(self)
 		game.removeTickEvent("movimiento proyectil " + nombre)
+		stats.perderVida()
 	}
 	
 	method chocasteConPiedra() {}
 }
 
-object contador { // Para el nombre de los proyectiles
+object contador { // Para el nombre de los proyectiles :)
 	var numero = 0
 	method numero() = numero
 	method aumentar() {numero += 1}
