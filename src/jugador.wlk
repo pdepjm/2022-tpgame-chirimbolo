@@ -109,7 +109,7 @@ object abajo {
 }
 
 class Corazon {
-	const image = "assets/corazon.jpg"
+	const image = "corazon.png"
 	var position
 	
 	method image() = image

@@ -5,6 +5,7 @@ import mundo.*
 
 object islaEnemigos{
 	var completada = false
+	const bg = "fondoIslaEnemigos.png"
 	
 	method position() = game.at(30,17) // 30, 17
 	method image() = "islaEnemigos.png"
@@ -15,8 +16,9 @@ object islaEnemigos{
 	method estaCompletada() = completada
 	
 	method configIsla(){
-		stats.cambiarPersonaje(new Personaje(image="luffyQuieto.jpg", position = game.at(0, game.height() / 2))) // cambia el personaje del jugador
+		stats.cambiarPersonaje(new Personaje(image="luffy.png", position = game.at(0, game.height() / 2))) // cambia el personaje del jugador
 		configBasicaIsla.configuraciones(self)
+		fondo.image(bg)
 		//bordes.crear()
 	}
 	
@@ -44,7 +46,7 @@ object piedra {
 	var position
 	
 	method position() = position
-	method image() = "merry.jpg"
+	method image() = "piedra.png"
 	
 	method chocasteConJugador() {
 		game.removeVisual(self)
@@ -78,20 +80,19 @@ object piedra {
 }
 
 class Enemigo {
-	var image
+	var property image
 	var position
 	var positionAnterior = null
 	const nombre
 	var vivo = true
 	
-	method image() = image
 	method position() = position
 	
 	method nombre() = nombre
 	
 	method morir() {
 		vivo = false
-		game.say(self, "nos vemos locura")
+		self.image("muerte.png")
 		game.removeTickEvent("movimiento " + nombre)
 		game.schedule(3000, {game.removeVisual(self)})
 	}
@@ -122,7 +123,7 @@ class Enemigo {
 	}
 	
 	method disparar(tiempo) {
-		const proyectil = new Proyectil(position = position.left(1), nombre = "proyectil" + contador.numero().toString())
+		const proyectil = new Proyectil(position = game.at(position.x() - 1 ,position.y() + 1), nombre = "proyectil" + contador.numero().toString())
 		contador.aumentar()
 		game.addVisual(proyectil)
 		game.onTick(tiempo, "movimiento proyectil " + proyectil.nombre(), {
@@ -163,12 +164,13 @@ class Boss inherits Enemigo { // cuando pierde una vida tira proyectiles mas rap
 	
 	override method morir() {
 		vivo = false
-		game.say(self, "nos vemos locura")
+		self.image("muerte.png")
 		game.removeTickEvent("movimiento boss enojado")
 		game.schedule(3000, {game.removeVisual(self)})
 	}
 	
 	method enojado() {
+		self.image("enojado.png")
 		game.removeTickEvent("movimiento " + nombre)
 		game.onTick(1000, "movimiento boss enojado", {
 			self.moverRandom()
@@ -177,9 +179,9 @@ class Boss inherits Enemigo { // cuando pierde una vida tira proyectiles mas rap
 	}
 }
 
-const enemigo1 = new Enemigo(image = "merry.jpg", position = game.at(26, 16), nombre = "enemigo1")
-const enemigoBoss = new Boss(image = "merry.jpg", position = game.at(29, 9), nombre = "enemigoBoss")
-const enemigo2 = new Enemigo(image = "merry.jpg", position = game.at(32, 3), nombre = "enemigo2")
+const enemigo1 = new Enemigo(image = "enemigo.png", position = game.at(26, 16), nombre = "enemigo1")
+const enemigoBoss = new Boss(image = "boss.png", position = game.at(29, 9), nombre = "enemigoBoss")
+const enemigo2 = new Enemigo(image = "enemigo.png", position = game.at(32, 3), nombre = "enemigo2")
 
 object enemigos {
 	const enemigos = [enemigo1, enemigo2, enemigoBoss]
@@ -193,7 +195,7 @@ class Proyectil {
 	const nombre
 	
 	method position() = position
-	method image() = "merry.jpg"
+	method image() = "bala.png"
 	method nombre() = nombre 
 
 	method mover() {

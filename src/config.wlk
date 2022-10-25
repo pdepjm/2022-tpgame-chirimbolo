@@ -7,7 +7,7 @@ object config {
         game.width(35)
         game.height(20)
         game.cellSize(50)
-        game.ground("assets/grilla.jpg")
+        game.ground("pasto.png")
         game.title("Two piece")
     }
     
@@ -20,4 +20,9 @@ object config {
 		game.addVisual(stats.personajeActual())
         stats.mostrarVidas()
     }
+}
+
+object fondo {
+	var property image = "fondoMar.png"
+	var property position = game.at(-1,-1)
 }

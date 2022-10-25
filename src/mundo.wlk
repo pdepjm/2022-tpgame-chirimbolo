@@ -7,7 +7,7 @@ import islaPreguntas.*
 
 object mundo{
 	const islas = [islaEnemigos, islaLaberinto, islaPreguntas]
-	const property image = "mar.jpg" // que sea un barquito asi cuando pasa por encima vuelve al mundo principal y queda re facha
+	var property image = "mar.jpg" // que sea un barquito asi cuando pasa por encima vuelve al mundo principal y queda re facha
 	var property position
 	
 	method islas() = islas
@@ -22,9 +22,10 @@ object mundo{
 	method estaCompletada() = true
 	
 	method configIsla(){
-		stats.cambiarPersonaje(new Personaje(image="merry.jpg", position = game.center(), positionAnterior = null)) // cambia el personaje del jugador
+		stats.cambiarPersonaje(new Personaje(image="merry.png", position = game.center(), positionAnterior = null)) // cambia el personaje del jugador
 		configBasicaIsla.configuraciones(self)
 		self.mostrarIslas()
+		fondo.image("fondoMar.png")
 	}
 	method cargar() {
 		if (self.estanTodasCompletadas()) {
@@ -33,6 +34,7 @@ object mundo{
 		}
 	}
 	method chocasteConJugador() {
+		game.clear()
 		stats.islaActual().completarIsla()
 		self.configIsla()
 		self.cargar()
@@ -44,9 +46,10 @@ object configBasicaIsla {
 	method configuraciones(isla) {
 		game.clear()
 		stats.cambiarIsla(isla)
-		config.setPersonaje()
+		game.schedule(1,{config.setPersonaje()})
 		config.configuracionesTecnicas()
-		config.actions()
+		game.schedule(1,{config.actions()})
+		fondo.position().drawElement(fondo)
 	}
 }
 
@@ -68,14 +71,14 @@ object bordes {
 	}*/
 	
 	method crearFila(cant, startingX, startingY) {
-		cant.times({a => game.addVisual(new Bloque(image = "bloque.jpg", position = game.at(startingX - 1 + a, startingY)))})
+		cant.times({a => game.addVisual(new Bloque(image = "bloque.png", position = game.at(startingX - 1 + a, startingY)))})
 	}
 	
 	method crearColumna(cant, startingX, startingY) {
-		cant.times({a => game.addVisual(new Bloque(image = "bloque.jpg", position = game.at(startingX, startingY - 1 + a)))})
+		cant.times({a => game.addVisual(new Bloque(image = "bloque.png", position = game.at(startingX, startingY - 1 + a)))})
 	}
 	method crearRio(cant, startingX, startingY) { // sabemos que son iguales, por favor no nos hagan modificar todos los mensajes del laberito :(
-		cant.times({a => game.addVisual(new Bloque(image = "merry.jpg", position = game.at(startingX, startingY - 1 + a)))})
+		cant.times({a => game.addVisual(new Bloque(image = "rio.png", position = game.at(startingX, startingY - 1 + a)))})
 	} // cambiar imagen
 	
 	method estaEnBorde(position) = position.x() < 0 || position.x() > game.width() - 1 || position.y() < 0 || position.y() > game.height() - 1
