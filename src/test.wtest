@@ -8,9 +8,8 @@ describe "tests de la isla enemigos" {
 		stats.cambiarPersonaje(new Personaje(image="luffyQuieto.jpg", position = game.at(0, game.height() / 2), positionAnterior = null))
 	}
 	
-	test "perderVida() saca vida a jugador" {
-		stats.perderVida() // cambiar metodo sin wollok games
-		const ultimo = stats.vida().last()
-		assert.that(ultimo === cora4)
+	test "restarVida() saca vida a jugador" {
+		stats.restarVida()
+		assert.that(stats.vida().size() === 4)
 	}
 }

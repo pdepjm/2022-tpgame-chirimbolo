@@ -14,12 +14,16 @@ object stats {
 
     method cambiarPersonaje(personaje) {personajeActual = personaje}
     method cambiarIsla(isla) {islaActual = isla}
+    
     method perderVida() {
     	game.say(self.personajeActual(), "AUCH!")
     	self.borrarVidas()
-    	vida.remove(vida.last())
+    	self.restarVida()
     	self.perdiste()
     	self.mostrarVidas()
+    }
+    method restarVida() {
+    	vida.remove(vida.last())
     }
     method borrarVidas() {
     	vida.forEach({cora => game.removeVisual(cora)})
@@ -119,8 +123,8 @@ class Corazon {
 	method chocasteConPiedra() {}
 }
 
-const cora1 = new Corazon(position = game.at(1, 18))
-const cora2 = new Corazon(position = game.at(2, 18))
-const cora3 = new Corazon(position = game.at(3, 18))
-const cora4 = new Corazon(position = game.at(4, 18))
-const cora5 = new Corazon(position = game.at(5, 18))
+const cora1 = new Corazon(position = game.at(3, 18))
+const cora2 = new Corazon(position = game.at(4, 18))
+const cora3 = new Corazon(position = game.at(5, 18))
+const cora4 = new Corazon(position = game.at(6, 18))
+const cora5 = new Corazon(position = game.at(7, 18))

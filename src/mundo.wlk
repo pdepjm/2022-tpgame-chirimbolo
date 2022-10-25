@@ -22,7 +22,7 @@ object mundo{
 	method estaCompletada() = true
 	
 	method configIsla(){
-		stats.cambiarPersonaje(new Personaje(image="merry.png", position = game.center(), positionAnterior = null)) // cambia el personaje del jugador
+		stats.cambiarPersonaje(new Personaje(image="pregunta.png", position = game.center(), positionAnterior = null)) // cambia el personaje del jugador
 		configBasicaIsla.configuraciones(self)
 		self.mostrarIslas()
 		fondo.image("fondoMar.png")
@@ -45,11 +45,11 @@ object mundo{
 object configBasicaIsla {
 	method configuraciones(isla) {
 		game.clear()
-		stats.cambiarIsla(isla)
-		game.schedule(1,{config.setPersonaje()})
-		config.configuracionesTecnicas()
-		game.schedule(1,{config.actions()})
 		fondo.position().drawElement(fondo)
+		stats.cambiarIsla(isla)
+		config.setPersonaje()
+		config.configuracionesTecnicas()
+		config.actions()
 	}
 }
 
@@ -78,7 +78,7 @@ object bordes {
 		cant.times({a => game.addVisual(new Bloque(image = "bloque.png", position = game.at(startingX, startingY - 1 + a)))})
 	}
 	method crearRio(cant, startingX, startingY) { // sabemos que son iguales, por favor no nos hagan modificar todos los mensajes del laberito :(
-		cant.times({a => game.addVisual(new Bloque(image = "rio.png", position = game.at(startingX, startingY - 1 + a)))})
+		cant.times({a => game.addVisual(new Bloque(image = "lava.png", position = game.at(startingX, startingY - 1 + a)))})
 	} // cambiar imagen
 	
 	method estaEnBorde(position) = position.x() < 0 || position.x() > game.width() - 1 || position.y() < 0 || position.y() > game.height() - 1

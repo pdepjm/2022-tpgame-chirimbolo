@@ -147,7 +147,7 @@ class Boss inherits Enemigo { // cuando pierde una vida tira proyectiles mas rap
 			self.morir()
 		} else {
 			game.say(self, "nice shot bro, pero me queda otra vida")
-			self.enojado()
+			self.enojarse()
 		}
 	}
 	
@@ -169,7 +169,7 @@ class Boss inherits Enemigo { // cuando pierde una vida tira proyectiles mas rap
 		game.schedule(3000, {game.removeVisual(self)})
 	}
 	
-	method enojado() {
+	method enojarse() {
 		self.image("enojado.png")
 		game.removeTickEvent("movimiento " + nombre)
 		game.onTick(1000, "movimiento boss enojado", {
