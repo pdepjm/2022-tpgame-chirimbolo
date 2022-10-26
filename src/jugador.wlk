@@ -50,19 +50,25 @@ object stats {
 }
 
 class Personaje{
-    var image
+    var property image
     var position
     var positionAnterior = null
     var property piedraEnMano = false
     
+    var imageMirandoDerecha = image
+    var imageMirandoIzquierda = self.imageSinPng() + "I.png".toString()
+    
+    method imageSinPng() = image.split(".").get(0)
+    
+    method setImages() {imageMirandoDerecha = image imageMirandoIzquierda = self.imageSinPng() + "I.png".toString()}
+    
     method position() = position
-    method image() = image
 
     method teclas(){
 		keyboard.w().onPressDo({self.moverA(arriba)})
-		keyboard.a().onPressDo({self.moverA(izquierda)})
+		keyboard.a().onPressDo({self.moverA(izquierda) self.image(imageMirandoIzquierda)})
 		keyboard.s().onPressDo({self.moverA(abajo)})
-		keyboard.d().onPressDo({self.moverA(derecha)})
+		keyboard.d().onPressDo({self.moverA(derecha) self.image(imageMirandoDerecha)})
     }
 
     method moverA(dir) {
@@ -80,10 +86,13 @@ class Personaje{
 	method chocasteConPiedra() {}
 	
 	method habilitadoATirarPiedra() {
+		imageMirandoIzquierda = self.imageSinPng() + "ConPiedraI.png".toString()
+		imageMirandoDerecha = self.imageSinPng() + "ConPiedra.png".toString()
 		keyboard.space().onPressDo({
 			if (self.piedraEnMano()) {
 				piedra.tirar()
 				self.piedraEnMano(false)
+				self.setImages()
 			}
 		})
 	}
