@@ -28,7 +28,7 @@ object islaPreguntas{
 	method estaCompletada() = completada
 	
 	method configIsla(){
-		stats.cambiarPersonaje(new Personaje(image="luffy.png", position = game.at(17, 3)))
+		stats.cambiarPersonaje(new Personaje(imagenOriginal="luffy.png", position = game.at(17, 3)))
 		configBasicaIsla.configuraciones(self)
 		fondo.image(bg)
 		//bordes.crear()

@@ -16,7 +16,7 @@ object islaLaberinto{
 	method estaCompletada() = completada
 	
 	method configIsla(){
-		stats.cambiarPersonaje(new Personaje(image="luffy.png", position = game.at(0, (game.height() / 2) - 1)))
+		stats.cambiarPersonaje(new Personaje(imagenOriginal="luffy.png", position = game.at(0, (game.height() / 2) - 1)))
 		configBasicaIsla.configuraciones(self)
 		reloj.empezar()
 		fondo.image(bg)

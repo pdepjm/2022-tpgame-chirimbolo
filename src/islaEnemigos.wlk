@@ -16,7 +16,7 @@ object islaEnemigos{
 	method estaCompletada() = completada
 	
 	method configIsla(){
-		stats.cambiarPersonaje(new Personaje(image="luffy.png", position = game.at(0, game.height() / 2))) // cambia el personaje del jugador
+		stats.cambiarPersonaje(new Personaje(imagenOriginal="luffy.png", position = game.at(0, game.height() / 2))) // cambia el personaje del jugador
 		configBasicaIsla.configuraciones(self)
 		fondo.image(bg)
 		//bordes.crear()

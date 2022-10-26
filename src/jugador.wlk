@@ -50,17 +50,22 @@ object stats {
 }
 
 class Personaje{
-    var property image
+	var imagenOriginal
+    var property image = imagenOriginal
     var position
     var positionAnterior = null
     var property piedraEnMano = false
     
     var imageMirandoDerecha = image
-    var imageMirandoIzquierda = self.imageSinPng() + "I.png".toString()
+    var imageMirandoIzquierda = (self.imageSinPng() + "I.png").toString()
     
     method imageSinPng() = image.split(".").get(0)
     
-    method setImages() {imageMirandoDerecha = image imageMirandoIzquierda = self.imageSinPng() + "I.png".toString()}
+    method setImages() {
+    	image = imagenOriginal
+    	imageMirandoDerecha = image 
+    	imageMirandoIzquierda = (self.imageSinPng() + "I.png").toString()
+    }
     
     method position() = position
 

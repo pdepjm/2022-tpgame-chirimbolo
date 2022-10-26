@@ -7,7 +7,7 @@ object config {
         game.width(35)
         game.height(20)
         game.cellSize(50)
-        game.ground("pasto.png")
+        game.ground("grilla.jpg")
         game.title("Two piece")
     }
     

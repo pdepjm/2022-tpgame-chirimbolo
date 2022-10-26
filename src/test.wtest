@@ -5,7 +5,7 @@ import config.*
 
 describe "tests de la isla enemigos" {
 	method initialize() {
-		stats.cambiarPersonaje(new Personaje(image="luffyQuieto.jpg", position = game.at(0, game.height() / 2), positionAnterior = null))
+		stats.cambiarPersonaje(new Personaje(imagenOriginal="luffyQuieto.jpg", position = game.at(0, game.height() / 2), positionAnterior = null))
 	}
 	
 	test "restarVida() saca vida a jugador" {
