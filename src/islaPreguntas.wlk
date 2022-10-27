@@ -18,7 +18,16 @@ object islaPreguntas {
 	const preguntas = [pregunta1, pregunta2, pregunta3, pregunta4, pregunta5, pregunta6, pregunta7, pregunta8, pregunta9]
 	var preguntaActual = 0
 	const bg = "fondoIslaPreguntas.png"
+	var bloquesInvisibles = []
 	
+	method agregarBloques(){
+		2.times({a => bloquesInvisibles.add(new BloqueInvisible(position = game.at(self.position().x() - 1, self.position().y() - 1 + a), isla = self))})
+		2.times({a => bloquesInvisibles.add(new BloqueInvisible(position = game.at(self.position().x() - 1 + a, self.position().y() + 2), isla = self))})
+		2.times({a => bloquesInvisibles.add(new BloqueInvisible(position = game.at(self.position().x() + 2, self.position().y() + 2 - a), isla = self))})
+		2.times({a => bloquesInvisibles.add(new BloqueInvisible(position = game.at(self.position().x() - 1 + a, self.position().y() - 1), isla = self))})
+	}
+	
+	method bloquesInvisibles() = bloquesInvisibles
 	method position() = game.at(25,9)
 	method image() = "islaPreguntas.png"
 
@@ -78,18 +87,18 @@ class Pregunta {
 	
 	method mostrarBotones(){
 		if (respuestaCorrecta == 1) {
-			game.addVisual(new Boton(image = "a.png", position = game.at(12,7), esCorrecto = true))
-			game.addVisual(new Boton(image = "b.png", position = game.at(17,7), esCorrecto = false))
-			game.addVisual(new Boton(image = "c.png", position = game.at(22,7), esCorrecto = false))
+			game.addVisual(new Boton(image = "a.png", position = game.at(12,5), esCorrecto = true))
+			game.addVisual(new Boton(image = "b.png", position = game.at(17,5), esCorrecto = false))
+			game.addVisual(new Boton(image = "c.png", position = game.at(22,5), esCorrecto = false))
 		}
 		else if (respuestaCorrecta == 2) {
-			game.addVisual(new Boton(image = "a.png", position = game.at(12,7), esCorrecto = false))
-			game.addVisual(new Boton(image = "b.png", position = game.at(17,7), esCorrecto = true))
-			game.addVisual(new Boton(image = "c.png", position = game.at(22,7), esCorrecto = false))
+			game.addVisual(new Boton(image = "a.png", position = game.at(12,5), esCorrecto = false))
+			game.addVisual(new Boton(image = "b.png", position = game.at(17,5), esCorrecto = true))
+			game.addVisual(new Boton(image = "c.png", position = game.at(22,5), esCorrecto = false))
 		} else {
-			game.addVisual(new Boton(image = "a.png", position = game.at(12,7), esCorrecto = false))
-			game.addVisual(new Boton(image = "b.png", position = game.at(17,7), esCorrecto = false))
-			game.addVisual(new Boton(image = "c.png", position = game.at(22,7), esCorrecto = true))
+			game.addVisual(new Boton(image = "a.png", position = game.at(12,5), esCorrecto = false))
+			game.addVisual(new Boton(image = "b.png", position = game.at(17,5), esCorrecto = false))
+			game.addVisual(new Boton(image = "c.png", position = game.at(22,5), esCorrecto = true))
 		}
 	}
 	

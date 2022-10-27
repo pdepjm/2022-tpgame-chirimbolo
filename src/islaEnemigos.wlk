@@ -6,7 +6,16 @@ import mundo.*
 object islaEnemigos{
 	var completada = false
 	const bg = "fondoIslaEnemigos.png"
+	const bloquesInvisibles = []
 	
+	method agregarBloques(){
+		2.times({a => bloquesInvisibles.add(new BloqueInvisible(position = game.at(self.position().x() - 1, self.position().y() - 1 + a), isla = self))})
+		2.times({a => bloquesInvisibles.add(new BloqueInvisible(position = game.at(self.position().x() - 1 + a, self.position().y() + 2), isla = self))})
+		2.times({a => bloquesInvisibles.add(new BloqueInvisible(position = game.at(self.position().x() + 2, self.position().y() + 2 - a), isla = self))})
+		2.times({a => bloquesInvisibles.add(new BloqueInvisible(position = game.at(self.position().x() - 1 + a, self.position().y() - 1), isla = self))})
+	}
+	
+	method bloquesInvisibles() = bloquesInvisibles
 	method position() = game.at(30,17) // 30, 17
 	method image() = "islaEnemigos.png"
 
@@ -34,6 +43,7 @@ object islaEnemigos{
     	game.schedule(5000, {piedra.spawnear()})
     	enemigos.lista().forEach({enemigo => 
     		game.addVisual(enemigo)
+    		game.addVisual(enemigo.bloqueInvisible())
 			game.onTick(2000, "movimiento " + enemigo.nombre(), {
     			enemigo.moverRandom()
     			enemigo.disparar(500)
@@ -85,9 +95,10 @@ class Enemigo {
 	var positionAnterior = null
 	const nombre
 	var vivo = true
+	const bloqueInvisible = new BloqueInvisibleEnemigo(position = game.at(self.position().x(), self.position().y() + 1), enemigo = self)
 	
+	method bloqueInvisible() = bloqueInvisible
 	method position() = position
-	
 	method nombre() = nombre
 	
 	method vivoAFalse() {
@@ -99,6 +110,7 @@ class Enemigo {
 		self.image("muerte.png")
 		game.removeTickEvent("movimiento " + nombre)
 		game.schedule(3000, {game.removeVisual(self)})
+		game.removeVisual(bloqueInvisible)
 	}
 	method estaVivo() = vivo
 	
@@ -124,6 +136,7 @@ class Enemigo {
 			const random = 1.randomUpTo(2)
 			if (random < 1.5) position = position.down(1) else position = position.up(1)
 		}
+		bloqueInvisible.actualizarPosicion(position)
 	}
 	
 	method disparar(tiempo) {
@@ -171,6 +184,7 @@ class Boss inherits Enemigo { // cuando pierde una vida tira proyectiles mas rap
 		self.image("muerte.png")
 		game.removeTickEvent("movimiento boss enojado")
 		game.schedule(3000, {game.removeVisual(self)})
+		game.removeVisual(bloqueInvisible)
 	}
 	
 	method enojarse() {
@@ -218,4 +232,19 @@ object contador { // Para el nombre de los proyectiles :)
 	var numero = 0
 	method numero() = numero
 	method aumentar() {numero += 1}
+}
+
+class BloqueInvisibleEnemigo{
+	var position
+	var enemigo
+	
+	method position() = position
+	
+	method chocasteConPiedra(){
+		enemigo.chocasteConPiedra()
+	}
+	
+	method actualizarPosicion(posicion) {
+		position = game.at(position.x(), posicion.y() + 1)
+	}
 }

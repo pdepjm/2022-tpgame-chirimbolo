@@ -6,7 +6,16 @@ import mundo.*
 object islaLaberinto{
 	var completada = false
 	const bg = "fondoIslaLaberinto.png"
+	const bloquesInvisibles = []
+
+	method agregarBloques(){
+		2.times({a => bloquesInvisibles.add(new BloqueInvisible(position = game.at(self.position().x() - 1, self.position().y() - 1 + a), isla = self))})
+		2.times({a => bloquesInvisibles.add(new BloqueInvisible(position = game.at(self.position().x() - 1 + a, self.position().y() + 2), isla = self))})
+		2.times({a => bloquesInvisibles.add(new BloqueInvisible(position = game.at(self.position().x() + 2, self.position().y() + 2 - a), isla = self))})
+		2.times({a => bloquesInvisibles.add(new BloqueInvisible(position = game.at(self.position().x() - 1 + a, self.position().y() - 1), isla = self))})
+	}
 	
+	method bloquesInvisibles() = bloquesInvisibles
 	method position() = game.at(30,3) // 30, 3
 	method image() = "islaLaberinto.png"
 
@@ -154,7 +163,7 @@ object islaLaberinto{
 }
 
 object reloj {
-	var segundos = 30
+	var segundos = 40
 	
 	method segundos() = segundos
 	
@@ -162,12 +171,12 @@ object reloj {
 		segundos -= 1
 	}
 	
-	method position() = game.at(22,19)
+	method position() = game.at(6,19)
 	
 	method text() = "tiempo: " + segundos.toString()
 	
 	method reiniciar() {
-		segundos = 30
+		segundos = 40
 	}
 	method empezar() {
 		game.onTick(1000, "descontar segundo", {

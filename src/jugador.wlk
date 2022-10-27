@@ -34,8 +34,8 @@ object stats {
     method perdiste() {
     	if (vida.isEmpty()) {
     		game.clear()
-    		game.addVisual(perder)
-    		game.say(perder, "PERDISTE!")
+    		fondo.image("perder.jpg")
+    		game.addVisual(fondo)
     		game.schedule(5000, {game.stop()})
     	}
     }
@@ -98,12 +98,12 @@ class Personaje{
 
 object perder {
 	method image() = "perder.jpg"
-	method position() = game.center()
+	method position() = game.at(-1,-1)
 }
 
 object ganar {
-	method image() = "ganar.jpg"
-	method position() = game.center()
+	method image() = "ganar.png"
+	method position() = game.at(-1,-1)
 }
 
 object arriba {

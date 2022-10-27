@@ -7,13 +7,17 @@ import islaPreguntas.*
 
 object mundo{
 	const islas = [islaEnemigos, islaLaberinto, islaPreguntas]
-	var property image = "mar.jpg" // que sea un barquito asi cuando pasa por encima vuelve al mundo principal y queda re facha
+	var property image = "trofeo.png" // que sea un barquito asi cuando pasa por encima vuelve al mundo principal y queda re facha
 	var property position
 	
 	method islas() = islas
 	
 	method mostrarIslas(){
-		self.islas().forEach({isla => game.addVisual(isla)})
+		self.islas().forEach({isla => 
+			game.addVisual(isla) 
+			isla.agregarBloques() 
+			isla.bloquesInvisibles().forEach({bloque => game.addVisual(bloque)})
+		})
 	}
 	
 	method estanTodasCompletadas() = islas.all({isla => isla.estaCompletada()})
@@ -22,7 +26,7 @@ object mundo{
 	method estaCompletada() = true
 	
 	method configIsla(){
-		stats.cambiarPersonaje(new Personaje(imagenOriginal="barco.png", position = game.center(), positionAnterior = null)) // cambia el personaje del jugador
+		stats.cambiarPersonaje(new Personaje(imagenOriginal="barco.png", position = game.at(6,9), positionAnterior = null)) // cambia el personaje del jugador
 		configBasicaIsla.configuraciones(self)
 		self.mostrarIslas()
 		fondo.image("fondoMar.png")
@@ -44,8 +48,8 @@ object mundo{
 	method ganaste() {
     	if (self.estanTodasCompletadas()) {
     		game.clear()
-    		game.addVisual(ganar)
-    		game.say(ganar, "GANASTE!")
+    		fondo.image("ganar.jpg")
+    		game.addVisual(fondo)
     		game.schedule(5000, {game.stop()})
     	}
     }
@@ -60,10 +64,12 @@ object configBasicaIsla {
 		config.configuracionesTecnicas()
 		config.actions()
 	}
+	
+	
 }
 
 object moneda {
-	method image() = "moneda.jpg"
+	method image() = "moneda.png"
 	method position() = game.at(9, 10)
 	
 	method chocasteConJugador() {
@@ -105,3 +111,22 @@ class Bloque {
 	}
 	method chocasteConPiedra() {}
 }
+
+class BloqueInvisible{
+	var position
+	var isla
+	
+	method position() = position
+	
+	method chocasteConJugador(){
+		isla.chocasteConJugador()
+	}
+	
+}
+
+
+
+
+
+
+
