@@ -33,9 +33,11 @@ object mundo{
 		fondo.image("fondoMar.png")
 	}
 	method cargar() {
+		game.sound("mainSound.mp3").play()
 		if (self.estanTodasCompletadas()) {
 			game.addVisual(moneda)
 			game.say(stats.personajeActual(), "Si agarro esa moneda brillante GANO!")
+
 		}
 	}
 	method chocasteConJugador() {
@@ -43,9 +45,11 @@ object mundo{
 		stats.islaActual().completarIsla()
 		islas.remove(stats.islaActual())
 		islas.add(new Tick(position = stats.islaActual().position()))
+		game.sound("agarrarTrofeo.mp3").play()
 		self.configIsla()
 		self.cargar()
 	}
+	
 	method chocasteConPiedra() {}
 	
 	method ganaste() {
@@ -53,7 +57,8 @@ object mundo{
     		game.clear()
     		fondo.image("ganar.jpg")
     		game.addVisual(fondo)
-    		game.schedule(5000, {game.stop()})
+    		game.schedule(12000, {game.stop()})
+    		game.sound("ganar.mp3").play()
     	}
     }
 }
@@ -72,8 +77,8 @@ object configBasicaIsla {
 }
 
 object moneda {
+	var property position = game.at(9, 10)
 	method image() = "moneda.png"
-	method position() = game.at(9, 10)
 	
 	method chocasteConJugador() {
 		mundo.ganaste()
@@ -133,7 +138,9 @@ class Tick {
 	method image() = "tick.png"
 	method position() = position
 	
-	method chocasteConJugador() {}
+	method chocasteConJugador() {
+		game.say(stats.personajeActual(), "Esta isla ya la complete")
+	}
 	method agregarBloques() {}
 	method bloquesInvisibles() = []
 }

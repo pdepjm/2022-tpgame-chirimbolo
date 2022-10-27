@@ -26,6 +26,7 @@ object stats {
     	vida.remove(vida.last())
     }
     method borrarVidas() {
+    	game.sound("perderVida.mp3").play()
     	vida.forEach({cora => game.removeVisual(cora)})
     }
     method mostrarVidas() {
@@ -37,6 +38,7 @@ object stats {
     		fondo.image("perder.jpg")
     		game.addVisual(fondo)
     		game.schedule(5000, {game.stop()})
+    		game.sound("perder.mp3").play()
     	}
     }
 }

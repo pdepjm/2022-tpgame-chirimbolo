@@ -19,6 +19,7 @@ object islaPreguntas {
 	var preguntaActual = 0
 	const bg = "fondoIslaPreguntas.png"
 	const bloquesInvisibles = []
+	const cancion = "islaPreguntasSound.mp3"
 	
 	method agregarBloques(){
 		2.times({a => bloquesInvisibles.add(new BloqueInvisible(position = game.at(self.position().x() - 1, self.position().y() - 1 + a), isla = self))})
@@ -52,6 +53,7 @@ object islaPreguntas {
 		preguntaActual = 0.randomUpTo(preguntas.size() - 1).roundUp()
 		game.addVisual(preguntas.get(preguntaActual))
 		preguntas.get(preguntaActual).mostrarBotones()
+		game.sound(cancion).play()
 	}
 	
 	method preguntaCorrecta(){

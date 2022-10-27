@@ -7,6 +7,7 @@ object islaEnemigos{
 	var completada = false
 	const bg = "fondoIslaEnemigos.png"
 	const bloquesInvisibles = []
+	const cancion = "islaEnemigosSound.mp3"
 	
 	method agregarBloques(){
 		2.times({a => bloquesInvisibles.add(new BloqueInvisible(position = game.at(self.position().x() - 1, self.position().y() - 1 + a), isla = self))})
@@ -37,6 +38,7 @@ object islaEnemigos{
 	}
 	
 	method cargar(){
+		game.sound(cancion).play()
 		bordes.crearRio(20, 21, 0)
 		bordes.crearRio(20, 22, 0)
 		bordes.crearRio(20, 23, 0)
@@ -61,7 +63,8 @@ object piedra {
 	method chocasteConJugador() {
 		game.removeVisual(self)
 		stats.personajeActual().piedraEnMano(true)
-		stats.personajeActual().habilitadoATirarPiedra()	
+		stats.personajeActual().habilitadoATirarPiedra()
+		game.sound("levantarPiedra.mp3").play()	
 	}
 	method mover() {
 		position = position.right(1)
@@ -140,6 +143,7 @@ class Enemigo {
 	}
 	
 	method disparar(tiempo) {
+		game.sound("disparo.mp3").play()
 		const proyectil = new Proyectil(position = game.at(position.x() - 1 ,position.y() + 1), nombre = "proyectil" + contador.numero().toString())
 		contador.aumentar()
 		game.addVisual(proyectil)

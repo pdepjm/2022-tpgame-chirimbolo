@@ -9,6 +9,7 @@ object config {
         game.cellSize(50)
         game.ground("suelo.png")
         game.title("Two piece")
+        
     }
     
     method actions(){
