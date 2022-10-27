@@ -51,7 +51,7 @@ object piedra {
 	method chocasteConJugador() {
 		game.removeVisual(self)
 		stats.personajeActual().piedraEnMano(true)
-		stats.personajeActual().habilitadoATirarPiedra() // se podria hacer un metodo en Personaje para que la piedra no se meta con el personaje (delegar)
+		stats.personajeActual().habilitadoATirarPiedra()	
 	}
 	method mover() {
 		position = position.right(1)

@@ -3,15 +3,15 @@ import jugador.*
 import config.*
 import mundo.*
 
-const pregunta1 = new Pregunta(pregunta = "p1.png", respuestaCorrecta = 0)
-const pregunta2 = new Pregunta(pregunta = "p2.png", respuestaCorrecta = 1)
-const pregunta3 = new Pregunta(pregunta = "p3.png", respuestaCorrecta = 2)
-const pregunta4 = new Pregunta(pregunta = "p4.png", respuestaCorrecta = 1)
-const pregunta5 = new Pregunta(pregunta = "p5.png", respuestaCorrecta = 0)
-const pregunta6 = new Pregunta(pregunta = "p6.png", respuestaCorrecta = 2)
-const pregunta7 = new Pregunta(pregunta = "p7.png", respuestaCorrecta = 0)
-const pregunta8 = new Pregunta(pregunta = "p8.png", respuestaCorrecta = 1)
-const pregunta9 = new Pregunta(pregunta = "p9.png", respuestaCorrecta = 1)
+const pregunta1 = new Pregunta(pregunta = "p1.png", respuestaCorrecta = 1)
+const pregunta2 = new Pregunta(pregunta = "p2.png", respuestaCorrecta = 2)
+const pregunta3 = new Pregunta(pregunta = "p3.png", respuestaCorrecta = 3)
+const pregunta4 = new Pregunta(pregunta = "p4.png", respuestaCorrecta = 2)
+const pregunta5 = new Pregunta(pregunta = "p5.png", respuestaCorrecta = 1)
+const pregunta6 = new Pregunta(pregunta = "p6.png", respuestaCorrecta = 3)
+const pregunta7 = new Pregunta(pregunta = "p7.png", respuestaCorrecta = 1)
+const pregunta8 = new Pregunta(pregunta = "p8.png", respuestaCorrecta = 2)
+const pregunta9 = new Pregunta(pregunta = "p9.png", respuestaCorrecta = 2)
 
 object islaPreguntas{
 	var completada = false
@@ -77,12 +77,12 @@ class Pregunta {
 	method position() = game.at(10, 10)
 	
 	method mostrarBotones(){
-		if (respuestaCorrecta == 0) {
+		if (respuestaCorrecta == 1) {
 			game.addVisual(new Boton(image = "a.png", position = game.at(12,7), esCorrecto = true))
 			game.addVisual(new Boton(image = "b.png", position = game.at(17,7), esCorrecto = false))
 			game.addVisual(new Boton(image = "c.png", position = game.at(22,7), esCorrecto = false))
 		}
-		else if (respuestaCorrecta == 1) {
+		else if (respuestaCorrecta == 2) {
 			game.addVisual(new Boton(image = "a.png", position = game.at(12,7), esCorrecto = false))
 			game.addVisual(new Boton(image = "b.png", position = game.at(17,7), esCorrecto = true))
 			game.addVisual(new Boton(image = "c.png", position = game.at(22,7), esCorrecto = false))

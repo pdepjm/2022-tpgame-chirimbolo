@@ -40,6 +40,15 @@ object mundo{
 		self.cargar()
 	}
 	method chocasteConPiedra() {}
+	
+	method ganaste() {
+    	if (self.estanTodasCompletadas()) {
+    		game.clear()
+    		game.addVisual(ganar)
+    		game.say(ganar, "GANASTE!")
+    		game.schedule(5000, {game.stop()})
+    	}
+    }
 }
 
 object configBasicaIsla {
@@ -58,7 +67,7 @@ object moneda {
 	method position() = game.at(9, 10)
 	
 	method chocasteConJugador() {
-		stats.ganaste()
+		mundo.ganaste()
 	}
 }
 

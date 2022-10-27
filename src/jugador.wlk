@@ -39,14 +39,6 @@ object stats {
     		game.schedule(5000, {game.stop()})
     	}
     }
-    method ganaste() {
-    	if (mundo.estanTodasCompletadas()) {
-    		game.clear()
-    		game.addVisual(ganar)
-    		game.say(ganar, "GANASTE!")
-    		game.schedule(5000, {game.stop()})
-    	}
-    }
 }
 
 class Personaje{
@@ -59,7 +51,7 @@ class Personaje{
     var imageMirandoDerecha = image
     var imageMirandoIzquierda = (self.imageSinPng() + "I.png").toString()
     
-    method imageSinPng() = image.split(".").get(0)
+    method imageSinPng() = imagenOriginal.split(".").get(0)
     
     method setImages() {
     	image = imagenOriginal
@@ -93,6 +85,7 @@ class Personaje{
 	method habilitadoATirarPiedra() {
 		imageMirandoIzquierda = self.imageSinPng() + "ConPiedraI.png".toString()
 		imageMirandoDerecha = self.imageSinPng() + "ConPiedra.png".toString()
+		image = imageMirandoDerecha
 		keyboard.space().onPressDo({
 			if (self.piedraEnMano()) {
 				piedra.tirar()
