@@ -6,7 +6,7 @@ import islaLaberinto.*
 import islaPreguntas.*
 
 object mundo{
-	const islasOriginales = [islaEnemigos, islaLaberinto, islaPreguntas]
+	const property islasOriginales = [islaEnemigos, islaLaberinto, islaPreguntas]
 	const islas = [islaEnemigos, islaLaberinto, islaPreguntas]
 	var property image = "trofeo.png" // que sea un barquito asi cuando pasa por encima vuelve al mundo principal y queda re facha
 	var property position

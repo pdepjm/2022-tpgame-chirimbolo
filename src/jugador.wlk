@@ -68,6 +68,10 @@ class Personaje{
 		keyboard.a().onPressDo({self.moverA(izquierda) self.image(imageMirandoIzquierda)})
 		keyboard.s().onPressDo({self.moverA(abajo)})
 		keyboard.d().onPressDo({self.moverA(derecha) self.image(imageMirandoDerecha)})
+		keyboard.m().onPressDo({
+			mundo.islasOriginales().forEach({isla => isla.completarIsla()})
+			mundo.cargar()
+		})
     }
 
     method moverA(dir) {

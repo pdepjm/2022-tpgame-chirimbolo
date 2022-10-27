@@ -1,4 +1,3 @@
-
 import wollok.game.*
 import config.*
 import mundo.*
