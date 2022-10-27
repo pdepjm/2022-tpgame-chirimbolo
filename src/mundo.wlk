@@ -58,7 +58,7 @@ object mundo{
 object configBasicaIsla {
 	method configuraciones(isla) {
 		game.clear()
-		fondo.position().drawElement(fondo)
+		game.addVisual(fondo)
 		stats.cambiarIsla(isla)
 		config.setPersonaje()
 		config.configuracionesTecnicas()
