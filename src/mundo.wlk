@@ -6,6 +6,7 @@ import islaLaberinto.*
 import islaPreguntas.*
 
 object mundo{
+	const islasOriginales = [islaEnemigos, islaLaberinto, islaPreguntas]
 	const islas = [islaEnemigos, islaLaberinto, islaPreguntas]
 	var property image = "trofeo.png" // que sea un barquito asi cuando pasa por encima vuelve al mundo principal y queda re facha
 	var property position
@@ -20,7 +21,7 @@ object mundo{
 		})
 	}
 	
-	method estanTodasCompletadas() = islas.all({isla => isla.estaCompletada()})
+	method estanTodasCompletadas() = islasOriginales.all({isla => isla.estaCompletada()})
 	
 	method completarIsla() {}
 	method estaCompletada() = true
@@ -40,6 +41,8 @@ object mundo{
 	method chocasteConJugador() {
 		game.clear()
 		stats.islaActual().completarIsla()
+		islas.remove(stats.islaActual())
+		islas.add(new Tick(position = stats.islaActual().position()))
 		self.configIsla()
 		self.cargar()
 	}
@@ -124,9 +127,13 @@ class BloqueInvisible{
 	
 }
 
+class Tick {
+	var position
 
-
-
-
-
-
+	method image() = "tick.png"
+	method position() = position
+	
+	method chocasteConJugador() {}
+	method agregarBloques() {}
+	method bloquesInvisibles() = []
+}

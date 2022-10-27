@@ -16,7 +16,7 @@ describe "tests de la isla enemigos" {
 describe "tests de la isla laberinto" {
 	test "el reloj anda bien y descuenta segundos" {
 		reloj.descontar()
-		assert.equals(reloj.segundos(), 29)
+		assert.equals(reloj.segundos(), 39)
 	}
 }
 
