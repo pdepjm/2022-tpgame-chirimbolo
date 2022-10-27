@@ -156,6 +156,8 @@ object islaLaberinto{
 object reloj {
 	var segundos = 30
 	
+	method segundos() = segundos
+	
 	method descontar() {
 		segundos -= 1
 	}

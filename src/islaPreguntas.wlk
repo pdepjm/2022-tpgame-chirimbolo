@@ -13,7 +13,7 @@ const pregunta7 = new Pregunta(pregunta = "p7.png", respuestaCorrecta = 1)
 const pregunta8 = new Pregunta(pregunta = "p8.png", respuestaCorrecta = 2)
 const pregunta9 = new Pregunta(pregunta = "p9.png", respuestaCorrecta = 2)
 
-object islaPreguntas{
+object islaPreguntas {
 	var completada = false
 	const preguntas = [pregunta1, pregunta2, pregunta3, pregunta4, pregunta5, pregunta6, pregunta7, pregunta8, pregunta9]
 	var preguntaActual = 0

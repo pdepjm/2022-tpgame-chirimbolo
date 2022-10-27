@@ -90,8 +90,12 @@ class Enemigo {
 	
 	method nombre() = nombre
 	
-	method morir() {
+	method vivoAFalse() {
 		vivo = false
+	}
+	
+	method morir() {
+		self.vivoAFalse()
 		self.image("muerte.png")
 		game.removeTickEvent("movimiento " + nombre)
 		game.schedule(3000, {game.removeVisual(self)})
@@ -163,7 +167,7 @@ class Boss inherits Enemigo { // cuando pierde una vida tira proyectiles mas rap
 	}
 	
 	override method morir() {
-		vivo = false
+		self.vivoAFalse()
 		self.image("muerte.png")
 		game.removeTickEvent("movimiento boss enojado")
 		game.schedule(3000, {game.removeVisual(self)})

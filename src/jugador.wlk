@@ -22,7 +22,7 @@ object stats {
     	self.perdiste()
     	self.mostrarVidas()
     }
-    method restarVida() {
+    method restarVida() { // es para los tests
     	vida.remove(vida.last())
     }
     method borrarVidas() {
