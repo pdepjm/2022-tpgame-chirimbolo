@@ -26,7 +26,7 @@ object mundo{
 	method estaCompletada() = true
 	
 	method configIsla(){
-		stats.cambiarPersonaje(new Personaje(imagenOriginal="barco.png", position = game.at(6,9), positionAnterior = null)) // cambia el personaje del jugador
+		stats.cambiarPersonaje(new Personaje(imagenOriginal="barco.png", position = game.at(15,10), positionAnterior = null)) // cambia el personaje del jugador
 		configBasicaIsla.configuraciones(self)
 		self.mostrarIslas()
 		fondo.image("fondoMar.png")

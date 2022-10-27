@@ -127,7 +127,7 @@ class Enemigo {
 	
 	method moverRandom() {
 		positionAnterior = position
-		if (position.y() >= 18) {
+		if (position.y() >= 16) {
 			position = position.down(1)
 		} 
 		else if (position.y() <= 1) {

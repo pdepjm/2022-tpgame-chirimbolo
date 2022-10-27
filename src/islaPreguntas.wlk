@@ -18,7 +18,7 @@ object islaPreguntas {
 	const preguntas = [pregunta1, pregunta2, pregunta3, pregunta4, pregunta5, pregunta6, pregunta7, pregunta8, pregunta9]
 	var preguntaActual = 0
 	const bg = "fondoIslaPreguntas.png"
-	var bloquesInvisibles = []
+	const bloquesInvisibles = []
 	
 	method agregarBloques(){
 		2.times({a => bloquesInvisibles.add(new BloqueInvisible(position = game.at(self.position().x() - 1, self.position().y() - 1 + a), isla = self))})
