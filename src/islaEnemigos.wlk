@@ -237,18 +237,3 @@ object contador { // Para el nombre de los proyectiles :)
 	method numero() = numero
 	method aumentar() {numero += 1}
 }
-
-class BloqueInvisibleEnemigo{
-	var position
-	var enemigo
-	
-	method position() = position
-	
-	method chocasteConPiedra(){
-		enemigo.chocasteConPiedra()
-	}
-	
-	method actualizarPosicion(posicion) {
-		position = game.at(position.x(), posicion.y() + 1)
-	}
-}

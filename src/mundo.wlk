@@ -117,33 +117,44 @@ object bordes {
 	method estaEnBorde(position) = position.x() < 0 || position.x() > game.width() - 1 || position.y() < 0 || position.y() > game.height() - 1
 }
 
-class Bloque {
-	var image
+class BloqueAbstracto {
 	var position
+
+	method position() = position
+
+	method chocasteConJugador() {}
+
+	method chocasteConPiedra() {}
+}
+
+class Bloque inherits BloqueAbstracto {
+	var image
 
 	method image() = image
 
-	method position() = position
-
-	method chocasteConJugador() {
+	override method chocasteConJugador() {
 		stats.personajeActual().chocaBloque()
-	}
-
-	method chocasteConPiedra() {
 	}
 }
 
-class BloqueInvisible {
-	var position
+class BloqueInvisible inherits BloqueAbstracto {
 	var isla
- 	var image = "asd"
- 
-	method position() = position
-
-	method chocasteConJugador() {
+	
+	override method chocasteConJugador() {
 		isla.chocasteConJugador()
 	}
+}
 
+class BloqueInvisibleEnemigo inherits BloqueAbstracto {
+	var enemigo
+	
+	override method chocasteConPiedra(){
+		enemigo.chocasteConPiedra()
+	}
+	
+	method actualizarPosicion(posicion) {
+		position = game.at(position.x(), posicion.y() + 1)
+	}
 }
 
 class Tick {
