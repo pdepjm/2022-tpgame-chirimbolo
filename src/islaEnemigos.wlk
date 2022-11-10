@@ -101,11 +101,12 @@ object piedra {
 }
 
 class Enemigo {
+	
 	var property image
 	var position
 	var positionAnterior = null
 	const nombre
-	var vivo = true
+	var property vivo = true
 	const bloqueInvisible = new BloqueInvisibleEnemigo(position = game.at(self.position().x(), self.position().y() + 1), enemigo = self)
 	
 	method bloqueInvisible() = bloqueInvisible
@@ -114,12 +115,8 @@ class Enemigo {
 	
 	method nombre() = nombre
 	
-	method vivoAFalse() {
-		vivo = false
-	}
-	
 	method morir() {
-		self.vivoAFalse()
+		vivo = false
 		game.sound("morirEnemigo.mp3").play()
 		self.image("muerte.png")
 		game.removeTickEvent("movimiento " + nombre)
@@ -139,6 +136,11 @@ class Enemigo {
 		}
 	}
 	
+	method resetear(){
+		vivo = true
+		image = "enemigo.png"
+	}
+	
 	method moverRandom() {
 		positionAnterior = position
 		if (position.y() >= 16) {
@@ -154,7 +156,8 @@ class Enemigo {
 	}
 	
 	method disparar(tiempo) {
-		game.sound("disparo.mp3").play()
+		const disparo = new Musica(theme = game.sound("disparo.mp3"))
+		disparo.playD()
 		const proyectil = new Proyectil(position = game.at(position.x() - 1 ,position.y() + 1), nombre = "proyectil" + contador.numero().toString())
 		contador.aumentar()
 		game.addVisual(proyectil)
@@ -172,6 +175,12 @@ class Enemigo {
 
 class Boss inherits Enemigo { // cuando pierde una vida tira proyectiles mas rapido
 	var vida = 2
+	
+	override method resetear(){
+		vivo = true
+		image = "boss.png"
+		vida = 2
+	}
 	
 	method perderVida() {
 		vida -= 1
@@ -196,7 +205,7 @@ class Boss inherits Enemigo { // cuando pierde una vida tira proyectiles mas rap
 	}
 	
 	override method morir() {
-		self.vivoAFalse()
+		vivo = false
 		game.sound("morirEnemigo.mp3").play()
 		self.image("muerte.png")
 		game.removeTickEvent("movimiento boss enojado")
@@ -221,6 +230,12 @@ const enemigo2 = new Enemigo(image = "enemigo.png", position = game.at(32, 3), n
 object enemigos {
 	const enemigos = [enemigo1, enemigo2, enemigoBoss]
 	method lista() = enemigos
+	
+	method resetearEnemigos(){
+		enemigos.forEach({
+			enemigo => enemigo.resetear()
+		})
+	}
 	
 	method todosMuertos() = enemigos.all({enemigo => !enemigo.estaVivo()})
 }

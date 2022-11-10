@@ -8,7 +8,7 @@ import islaPreguntas.*
 
 describe "tests de la isla enemigos" {	
 	test "matar a un enemigo cambia su atributo vivo a false" {
-		enemigo1.vivoAFalse()
+		enemigo1.vivo(false)
 		assert.notThat(enemigo1.estaVivo())
 	}
 }

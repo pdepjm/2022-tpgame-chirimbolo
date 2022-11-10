@@ -31,6 +31,8 @@ object config {
     	mundo.islas().forEach({isla => isla.descompletar()})
     	cancion.resume()
     	keyboard.r().onPressDo({})
+    	enemigos.resetearEnemigos()
+    	islaPreguntas.resetearPreguntas()
     }
 }
 
@@ -47,6 +49,11 @@ class Musica {
 		theme.volume(0.25)
 		theme.shouldLoop(true)
 		game.schedule(10, {theme.play()})
+	}
+	
+	method playD(){
+		theme.volume(0.25)
+		theme.play()
 	}
 	
 	method stop() {

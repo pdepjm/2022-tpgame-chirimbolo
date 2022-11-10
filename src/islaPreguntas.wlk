@@ -16,11 +16,15 @@ object islaPreguntas {
 	const pregunta8 = new Pregunta(pregunta = "p8.png", respuestaCorrecta = 2)
 	const pregunta9 = new Pregunta(pregunta = "p9.png", respuestaCorrecta = 2)
 	
-	const preguntas = [pregunta1, pregunta2, pregunta3, pregunta4, pregunta5, pregunta6, pregunta7, pregunta8, pregunta9]
+	var preguntas = [pregunta1, pregunta2, pregunta3, pregunta4, pregunta5, pregunta6, pregunta7, pregunta8, pregunta9]
 	var preguntaActual = 0
 	const bg = "fondoIslaPreguntas.png"
 	const bloquesInvisibles = []
-	const cancion = new Musica(theme = game.sound("islaPreguntasSound.mp3"))
+	//const cancion = new Musica(theme = game.sound("islaPreguntasSound.mp3"))
+
+	method resetearPreguntas(){
+		preguntas = [pregunta1, pregunta2, pregunta3, pregunta4, pregunta5, pregunta6, pregunta7, pregunta8, pregunta9]
+	}
 
 	method agregarBloques(){
 		2.times({a => bloquesInvisibles.add(new BloqueInvisible(position = game.at(self.position().x() - 1, self.position().y() - 1 + a), isla = self))})
@@ -96,20 +100,9 @@ class Pregunta {
 	method position() = game.at(10, 10)
 	
 	method mostrarBotones(){
-		if (respuestaCorrecta == 1) {
-			game.addVisual(new Boton(image = "a.png", position = game.at(12,5), esCorrecto = true))
-			game.addVisual(new Boton(image = "b.png", position = game.at(17,5), esCorrecto = false))
-			game.addVisual(new Boton(image = "c.png", position = game.at(22,5), esCorrecto = false))
-		}
-		else if (respuestaCorrecta == 2) {
-			game.addVisual(new Boton(image = "a.png", position = game.at(12,5), esCorrecto = false))
-			game.addVisual(new Boton(image = "b.png", position = game.at(17,5), esCorrecto = true))
-			game.addVisual(new Boton(image = "c.png", position = game.at(22,5), esCorrecto = false))
-		} else {
-			game.addVisual(new Boton(image = "a.png", position = game.at(12,5), esCorrecto = false))
-			game.addVisual(new Boton(image = "b.png", position = game.at(17,5), esCorrecto = false))
-			game.addVisual(new Boton(image = "c.png", position = game.at(22,5), esCorrecto = true))
-		}
+		game.addVisual(new Boton(image = "a.png", position = game.at(12,5), esCorrecto = respuestaCorrecta == 1))
+		game.addVisual(new Boton(image = "b.png", position = game.at(17,5), esCorrecto = respuestaCorrecta == 2))
+		game.addVisual(new Boton(image = "c.png", position = game.at(22,5), esCorrecto = respuestaCorrecta == 3))
 	}
 	
 	method chocasteConJugador() {}
