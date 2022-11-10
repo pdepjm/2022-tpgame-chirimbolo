@@ -24,6 +24,7 @@
 El objetivo del juego es completar los desafios de las tres islas, y salir con vida.
 
 Movimiento: A, S, D, W
+
 Tirar piedra (solo en isla de enemigos): space
 
 
