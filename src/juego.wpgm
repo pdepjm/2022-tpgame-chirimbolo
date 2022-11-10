@@ -1,8 +1,11 @@
 import wollok.game.*
-import pepita.*
+import config.*
+import mundo.*
+import jugador.*
 
 program juego {
-	game.title("Juego Base")
-	game.addVisual(pepita)
+	menu.mostrar()
+	game.addVisual(fondo)
+	game.schedule(500, {cancion.play()})
 	game.start()
 }

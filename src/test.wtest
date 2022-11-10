@@ -1,0 +1,64 @@
+import wollok.game.*
+import jugador.*
+import mundo.*
+import config.*
+import islaEnemigos.*
+import islaLaberinto.*
+import islaPreguntas.*
+
+describe "tests de la isla enemigos" {	
+	test "matar a un enemigo cambia su atributo vivo a false" {
+		enemigo1.vivo(false)
+		assert.notThat(enemigo1.estaVivo())
+	}
+}
+
+describe "tests de la isla laberinto" {
+	test "el reloj anda bien y descuenta segundos" {
+		reloj.descontar()
+		assert.equals(reloj.segundos(), 39)
+	}
+}
+
+describe "tests del mundo" {
+	test "la tres islas completas permiten ganar el juego" {
+		islaLaberinto.completarIsla()
+		islaPreguntas.completarIsla()
+		islaEnemigos.completarIsla()
+		assert.that(mundo.estanTodasCompletadas())
+	}
+	
+	test "solo la isla enemigos completa no permite ganar el juego" {
+		islaEnemigos.completarIsla()
+		assert.notThat(mundo.estanTodasCompletadas())
+	}
+	
+	test "solo la isla preguntas completa no permite ganar el juego" {
+		islaPreguntas.completarIsla()
+		assert.notThat(mundo.estanTodasCompletadas())
+	}
+	
+	test "solo la isla laberinto completa no permite ganar el juego" {
+		islaLaberinto.completarIsla()
+		assert.notThat(mundo.estanTodasCompletadas())
+	}
+}
+
+describe "tests del jugador" {
+	method initialize() {
+		stats.cambiarPersonaje(new Personaje(imagenOriginal="luffyQuieto.jpg", position = game.at(0, game.height() / 2), positionAnterior = null))
+	}
+	
+	test "restarVida() saca vida a jugador" {
+		stats.restarVida()
+		assert.that(stats.vida().size() === 4)
+	}
+	
+	test "cuando el jugador se queda sin vidas pierde" {
+		5.times{a => stats.restarVida()}
+		assert.that(stats.vida().isEmpty())
+	}
+}
+
+
+
