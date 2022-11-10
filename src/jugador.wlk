@@ -103,7 +103,7 @@ class Personaje{
 }
 
 object perder {
-	method image() = "perder.jpg"
+	method image() = "perder.png"
 	method position() = game.at(-1,-1)
 }
 

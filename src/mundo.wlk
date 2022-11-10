@@ -11,7 +11,7 @@ object mundo {
 	const islas = [ islaEnemigos, islaLaberinto, islaPreguntas ]
 	var property image = "trofeo.png"
 	var property position
-	const cancion = game.sound("mainSound.mp3")
+	const cancion = new Musica(theme = game.sound("mainSound.mp3"))
 
 	method islas() = islas
 	
@@ -32,15 +32,13 @@ object mundo {
 	method completarIsla() {}
 
 	method estaCompletada() = true
-	
-	method cancion() = cancion
 
 	method configIsla() {
 		stats.cambiarPersonaje(new Personaje(imagenOriginal = "barco.png", position = game.at(15, 10), positionAnterior = null)) // cambia el personaje del jugador
 		configBasicaIsla.configuraciones(self)
 		self.mostrarIslas()
 		fondo.image("fondoMar.png")
-		game.schedule(500, {game.sound("mainSound.mp3").play()})
+		game.schedule(500, {cancion.play()})
 	}
 
 	method cargar() {

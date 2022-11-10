@@ -20,7 +20,7 @@ object islaPreguntas {
 	var preguntaActual = 0
 	const bg = "fondoIslaPreguntas.png"
 	const bloquesInvisibles = []
-	const cancion = game.sound("islaPreguntasSound.mp3")
+	const cancion = new Musica(theme = game.sound("islaPreguntasSound.mp3"))
 
 	method agregarBloques(){
 		2.times({a => bloquesInvisibles.add(new BloqueInvisible(position = game.at(self.position().x() - 1, self.position().y() - 1 + a), isla = self))})
@@ -50,7 +50,7 @@ object islaPreguntas {
 	}
 	
 	method chocasteConJugador(){
-		mundo.cancion().stop()
+		game.stop()
 		self.configIsla()
 		self.cargar()
 	}

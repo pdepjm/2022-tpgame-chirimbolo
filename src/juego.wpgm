@@ -4,6 +4,6 @@ import mundo.*
 import jugador.*
 
 program juego {
-	mundo.configIsla() // setea el mar
+	menu.mostrar()
 	game.start()
 }
