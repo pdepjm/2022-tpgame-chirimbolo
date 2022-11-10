@@ -5,5 +5,7 @@ import jugador.*
 
 program juego {
 	menu.mostrar()
+	game.addVisual(fondo)
+	game.schedule(500, {cancion.play()})
 	game.start()
 }

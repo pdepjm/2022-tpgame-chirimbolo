@@ -27,6 +27,11 @@ object islaEnemigos{
 	method completarIsla() {
 		completada = true
 	}
+	
+	method descompletar() {
+        completada = false
+    }
+	
 	method estaCompletada() = completada
 	
 	method configIsla(){
@@ -37,13 +42,11 @@ object islaEnemigos{
 	}
 	
 	method chocasteConJugador(){
-		game.schedule(1,{cancion.stop()})
 		self.configIsla()
 		self.cargar()
 	}
 	
 	method cargar(){
-		cancion.play()
 		bordes.crearRio(20, 21, 0)
 		bordes.crearRio(20, 22, 0)
 		bordes.crearRio(20, 23, 0)

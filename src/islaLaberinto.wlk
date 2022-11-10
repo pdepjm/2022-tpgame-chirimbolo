@@ -27,6 +27,11 @@ object islaLaberinto{
 	method completarIsla() {
 		completada = true
 	}
+	
+	method descompletar() {
+        completada = false
+    }
+	
 	method estaCompletada() = completada
 	
 	method configIsla(){
@@ -38,7 +43,6 @@ object islaLaberinto{
 	}
 	
 	method chocasteConJugador(){
-		game.stop()
 		self.configIsla()
 		self.cargar()
 	}
@@ -47,7 +51,6 @@ object islaLaberinto{
 		self.crearLaberinto()
 		game.addVisualIn(mundo, game.at(34, 18))
 		game.addVisual(reloj)
-		cancion.play()
 	}
 	
 	method crearLaberinto() { // creando el laberinto

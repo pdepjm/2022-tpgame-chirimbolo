@@ -1,6 +1,9 @@
 import wollok.game.*
 import jugador.*
 import mundo.*
+import islaEnemigos.*
+import islaLaberinto.*
+import islaPreguntas.*
 
 object config {
     method configuracionesTecnicas(){
@@ -8,7 +11,7 @@ object config {
         game.height(20)
         game.cellSize(50)
         game.ground("suelo.png")
-        game.title("Two piece")
+        game.title("Three piece")
         
     }
     
@@ -20,6 +23,14 @@ object config {
     	stats.personajeActual().teclas()
 		game.addVisual(stats.personajeActual())
         stats.mostrarVidas()
+    }
+    
+    method restart(){
+    	stats.vida([cora1, cora2, cora3, cora4, cora5])
+    	mundo.islas([ islaEnemigos, islaLaberinto, islaPreguntas ])
+    	mundo.islas().forEach({isla => isla.descompletar()})
+    	cancion.resume()
+    	keyboard.r().onPressDo({})
     }
 }
 
@@ -33,13 +44,21 @@ class Musica {
 	const theme 
 	
 	method play() {
-		theme.volume(0.5)
+		theme.volume(0.25)
 		theme.shouldLoop(true)
 		game.schedule(10, {theme.play()})
 	}
 	
 	method stop() {
 		theme.stop()
+	}
+	
+	method pause(){
+		theme.pause()
+	}
+	
+	method resume(){
+		theme.resume()
 	}
 		
 }
@@ -48,7 +67,6 @@ object menu{
 	method mostrar(){
 		config.configuracionesTecnicas()
 		fondo.image("menu.png")
-		game.addVisual(fondo)
 		keyboard.enter().onPressDo({mundo.configIsla()})
 	}
 }

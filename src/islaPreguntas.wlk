@@ -42,6 +42,10 @@ object islaPreguntas {
 	}
 	method estaCompletada() = completada
 	
+	method descompletar() {
+        completada = false
+    }
+	
 	method configIsla(){
 		stats.cambiarPersonaje(new Personaje(imagenOriginal="luffy.png", position = game.at(17, 3)))
 		configBasicaIsla.configuraciones(self)
@@ -50,7 +54,6 @@ object islaPreguntas {
 	}
 	
 	method chocasteConJugador(){
-		game.stop()
 		self.configIsla()
 		self.cargar()
 	}
@@ -59,7 +62,6 @@ object islaPreguntas {
 		preguntaActual = 0.randomUpTo(preguntas.size() - 1).roundUp()
 		game.addVisual(preguntas.get(preguntaActual))
 		preguntas.get(preguntaActual).mostrarBotones()
-		cancion.play()
 	}
 	
 	method preguntaCorrecta(){

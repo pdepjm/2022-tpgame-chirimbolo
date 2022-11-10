@@ -6,11 +6,10 @@ import islaEnemigos.*
 object stats {
 	var personajeActual = null
 	var islaActual = null
-	const vida = [cora1, cora2, cora3, cora4, cora5]
+	var property vida = [cora1, cora2, cora3, cora4, cora5]
 	
 	method personajeActual() = personajeActual
     method islaActual() = islaActual
-	method vida() = vida
 
     method cambiarPersonaje(personaje) {personajeActual = personaje}
     method cambiarIsla(isla) {islaActual = isla}
@@ -35,10 +34,16 @@ object stats {
     method perdiste() {
     	if (vida.isEmpty()) {
     		game.clear()
-    		fondo.image("perder.jpg")
+    		fondo.image("perder.png")
     		game.addVisual(fondo)
-    		game.schedule(5000, {game.stop()})
-    		game.sound("perder.mp3").play()
+    		cancion.pause()
+    		const perder = new Musica(theme = game.sound("perder.mp3"))
+    		perder.play()
+    		keyboard.r().onPressDo({
+    			config.restart() 
+    			menu.mostrar()
+    			perder.stop()
+    		})
     	}
     }
 }
@@ -100,16 +105,6 @@ class Personaje{
 			}
 		})
 	}
-}
-
-object perder {
-	method image() = "perder.png"
-	method position() = game.at(-1,-1)
-}
-
-object ganar {
-	method image() = "ganar.png"
-	method position() = game.at(-1,-1)
 }
 
 object arriba {

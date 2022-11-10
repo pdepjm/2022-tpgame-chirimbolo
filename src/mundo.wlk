@@ -5,15 +5,14 @@ import islaEnemigos.*
 import islaLaberinto.*
 import islaPreguntas.*
 
+const cancion = new Musica(theme = game.sound("mainSound.mp3"))
+
 object mundo {
 
 	const property islasOriginales = [ islaEnemigos, islaLaberinto, islaPreguntas ]
-	const islas = [ islaEnemigos, islaLaberinto, islaPreguntas ]
+	var property islas = [ islaEnemigos, islaLaberinto, islaPreguntas ]
 	var property image = "trofeo.png"
 	var property position
-	const cancion = new Musica(theme = game.sound("mainSound.mp3"))
-
-	method islas() = islas
 	
 	method bloquesInvisibles() = null
 	// estos dos methods son para que no me tire warnings innecesarias
@@ -31,6 +30,9 @@ object mundo {
 
 	method completarIsla() {}
 
+	method descompletar() {
+    }
+
 	method estaCompletada() = true
 
 	method configIsla() {
@@ -38,7 +40,6 @@ object mundo {
 		configBasicaIsla.configuraciones(self)
 		self.mostrarIslas()
 		fondo.image("fondoMar.png")
-		game.schedule(500, {cancion.play()})
 	}
 
 	method cargar() {
@@ -51,7 +52,6 @@ object mundo {
 	method chocasteConJugador() {
 		game.clear()
 		stats.islaActual().completarIsla()
-		stats.islaActual().cancion().stop()
 		islas.remove(stats.islaActual())
 		islas.add(new Tick(position = stats.islaActual().position()))
 		game.sound("agarrarTrofeo.mp3").play()
@@ -64,10 +64,16 @@ object mundo {
 	method ganaste() {
 		if (self.estanTodasCompletadas()) {
 			game.clear()
-			fondo.image("ganar.jpg")
+			fondo.image("ganar.png")
 			game.addVisual(fondo)
-			game.schedule(12000, { game.stop()})
-			game.sound("ganar.mp3").play()
+			cancion.pause()
+			const ganar = new Musica(theme = game.sound("ganar.mp3"))
+			ganar.play()
+			keyboard.r().onPressDo({
+				config.restart() 
+				menu.mostrar()
+				ganar.stop()
+			})
 		}
 	}
 }
