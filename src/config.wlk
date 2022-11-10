@@ -26,9 +26,8 @@ object config {
     }
     
     method restart(){
-    	stats.vida([cora1, cora2, cora3, cora4, cora5])
-    	mundo.islas([ islaEnemigos, islaLaberinto, islaPreguntas ])
-    	mundo.islas().forEach({isla => isla.descompletar()})
+    	stats.reestablecerVidas()
+    	mundo.reestablecerIslas()
     	cancion.resume()
     	keyboard.r().onPressDo({})
     	enemigos.resetearEnemigos()

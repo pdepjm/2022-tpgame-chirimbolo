@@ -9,29 +9,35 @@ const cancion = new Musica(theme = game.sound("mainSound.mp3"))
 
 object mundo {
 
-	const property islasOriginales = [ islaEnemigos, islaLaberinto, islaPreguntas ]
-	var property islas = [ islaEnemigos, islaLaberinto, islaPreguntas ]
+	const islasOriginales = [ islaEnemigos, islaLaberinto, islaPreguntas ]
+	var islas = [ islaEnemigos, islaLaberinto, islaPreguntas ]
 	var property image = "trofeo.png"
 	var property position
+	
+	method islasOriginales() = islasOriginales
 	
 	method bloquesInvisibles() = null
 	// estos dos methods son para que no me tire warnings innecesarias
 	method agregarBloques() {}
 
 	method mostrarIslas() {
-		self.islas().forEach({ isla =>
+		islas.forEach({ isla =>
 			game.addVisual(isla)
 			isla.agregarBloques()
 			isla.bloquesInvisibles().forEach({ bloque => game.addVisual(bloque)})
 		})
+	}
+	
+	method reestablecerIslas() {
+		islas = islasOriginales.copy()
+    	islas.forEach({isla => isla.descompletar()})
 	}
 
 	method estanTodasCompletadas() = islasOriginales.all({ isla => isla.estaCompletada() })
 
 	method completarIsla() {}
 
-	method descompletar() {
-    }
+	method descompletar() {}
 
 	method estaCompletada() = true
 
@@ -103,13 +109,6 @@ object moneda {
 }
 
 object bordes {
-
-	/*method crear() {
-	 * 	self.crearColumna(22, -1, -1)
-	 * 	self.crearColumna(22, 35, -1)
-	 * 	self.crearFila(35, 0, -1)
-	 * 	self.crearFila(35, 0, 20)
-	 }*/
 	method crearFila(cant, startingX, startingY) {
 		cant.times({ a => game.addVisual(new Bloque(image = "bloque.png", position = game.at(startingX - 1 + a, startingY)))})
 	}
@@ -176,11 +175,9 @@ class Tick {
 	method chocasteConJugador() {
 		game.say(stats.personajeActual(), "Esta isla ya la complete")
 	}
-
-	method agregarBloques() {
-	}
-
+	
+	method agregarBloques() {}
+	
 	method bloquesInvisibles() = []
-
 }
 

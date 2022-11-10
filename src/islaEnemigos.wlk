@@ -7,8 +7,7 @@ object islaEnemigos{
 	var completada = false
 	const bg = "fondoIslaEnemigos.png"
 	const bloquesInvisibles = []
-	const cancion = new Musica(theme = game.sound("islaEnemigosSound.mp3"))
-	
+		
 	method agregarBloques(){
 		2.times({a => bloquesInvisibles.add(new BloqueInvisible(position = game.at(self.position().x() - 1, self.position().y() - 1 + a), isla = self))})
 		2.times({a => bloquesInvisibles.add(new BloqueInvisible(position = game.at(self.position().x() - 1 + a, self.position().y() + 2), isla = self))})
@@ -22,8 +21,6 @@ object islaEnemigos{
 	
 	method image() = "islaEnemigos.png"
 	
-	method cancion() = cancion
-
 	method completarIsla() {
 		completada = true
 	}

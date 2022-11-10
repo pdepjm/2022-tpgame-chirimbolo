@@ -6,7 +6,9 @@ import islaEnemigos.*
 object stats {
 	var personajeActual = null
 	var islaActual = null
-	var property vida = [cora1, cora2, cora3, cora4, cora5]
+	var vida = [cora1, cora2, cora3, cora4, cora5]
+	
+	method vida() = vida
 	
 	method personajeActual() = personajeActual
     method islaActual() = islaActual
@@ -31,6 +33,11 @@ object stats {
     method mostrarVidas() {
     	vida.forEach({cora => game.addVisual(cora)})
     }
+    
+    method reestablecerVidas() {
+    	vida = [cora1, cora2, cora3, cora4, cora5]
+    }
+    
     method perdiste() {
     	if (vida.isEmpty()) {
     		game.clear()

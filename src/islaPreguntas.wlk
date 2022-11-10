@@ -7,7 +7,6 @@ object islaPreguntas {
 	var completada = false
 	
 	const pregunta1 = new Pregunta(pregunta = "p1.png", respuestaCorrecta = 1)
-	const pregunta2 = new Pregunta(pregunta = "p2.png", respuestaCorrecta = 2)
 	const pregunta3 = new Pregunta(pregunta = "p3.png", respuestaCorrecta = 3)
 	const pregunta4 = new Pregunta(pregunta = "p4.png", respuestaCorrecta = 2)
 	const pregunta5 = new Pregunta(pregunta = "p5.png", respuestaCorrecta = 1)
@@ -16,14 +15,13 @@ object islaPreguntas {
 	const pregunta8 = new Pregunta(pregunta = "p8.png", respuestaCorrecta = 2)
 	const pregunta9 = new Pregunta(pregunta = "p9.png", respuestaCorrecta = 2)
 	
-	var preguntas = [pregunta1, pregunta2, pregunta3, pregunta4, pregunta5, pregunta6, pregunta7, pregunta8, pregunta9]
+	var preguntas = [pregunta1, pregunta3, pregunta4, pregunta5, pregunta6, pregunta7, pregunta8, pregunta9]
 	var preguntaActual = 0
 	const bg = "fondoIslaPreguntas.png"
 	const bloquesInvisibles = []
-	//const cancion = new Musica(theme = game.sound("islaPreguntasSound.mp3"))
 
 	method resetearPreguntas(){
-		preguntas = [pregunta1, pregunta2, pregunta3, pregunta4, pregunta5, pregunta6, pregunta7, pregunta8, pregunta9]
+		preguntas = [pregunta1, pregunta3, pregunta4, pregunta5, pregunta6, pregunta7, pregunta8, pregunta9]
 	}
 
 	method agregarBloques(){
@@ -38,8 +36,6 @@ object islaPreguntas {
 	method position() = game.at(25,9)
 	
 	method image() = "islaPreguntas.png"
-	
-	method cancion() = cancion
 
 	method completarIsla() {
 		completada = true
