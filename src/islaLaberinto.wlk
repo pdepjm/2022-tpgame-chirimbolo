@@ -7,7 +7,7 @@ object islaLaberinto{
 	var completada = false
 	const bg = "fondoIslaLaberinto.png"
 	const bloquesInvisibles = []
-	const cancion = "islaLaberintoSound.mp3"
+	const cancion = game.sound("islaLaberintoSound.mp3")
 
 	method agregarBloques(){
 		2.times({a => bloquesInvisibles.add(new BloqueInvisible(position = game.at(self.position().x() - 1, self.position().y() - 1 + a), isla = self))})
@@ -17,8 +17,12 @@ object islaLaberinto{
 	}
 	
 	method bloquesInvisibles() = bloquesInvisibles
+	
 	method position() = game.at(30,3) // 30, 3
+	
 	method image() = "islaLaberinto.png"
+	
+	method cancion() = cancion
 
 	method completarIsla() {
 		completada = true
@@ -34,6 +38,7 @@ object islaLaberinto{
 	}
 	
 	method chocasteConJugador(){
+		mundo.cancion().stop()
 		self.configIsla()
 		self.cargar()
 	}
@@ -42,7 +47,7 @@ object islaLaberinto{
 		self.crearLaberinto()
 		game.addVisualIn(mundo, game.at(34, 18))
 		game.addVisual(reloj)
-		game.sound(cancion).play()
+		cancion.play()
 	}
 	
 	method crearLaberinto() { // creando el laberinto

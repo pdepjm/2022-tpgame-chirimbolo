@@ -7,7 +7,7 @@ object islaEnemigos{
 	var completada = false
 	const bg = "fondoIslaEnemigos.png"
 	const bloquesInvisibles = []
-	const cancion = "islaEnemigosSound.mp3"
+	const cancion = game.sound("islaEnemigosSound.mp3")
 	
 	method agregarBloques(){
 		2.times({a => bloquesInvisibles.add(new BloqueInvisible(position = game.at(self.position().x() - 1, self.position().y() - 1 + a), isla = self))})
@@ -17,8 +17,12 @@ object islaEnemigos{
 	}
 	
 	method bloquesInvisibles() = bloquesInvisibles
+	
 	method position() = game.at(30,17) // 30, 17
+	
 	method image() = "islaEnemigos.png"
+	
+	method cancion() = cancion
 
 	method completarIsla() {
 		completada = true
@@ -26,19 +30,20 @@ object islaEnemigos{
 	method estaCompletada() = completada
 	
 	method configIsla(){
-		stats.cambiarPersonaje(new Personaje(imagenOriginal="luffy.png", position = game.at(0, game.height() / 2))) // cambia el personaje del jugador
+		stats.cambiarPersonaje(new Personaje(imagenOriginal="luffy.png", position = game.at(0, game.height() / 2)))
 		configBasicaIsla.configuraciones(self)
 		fondo.image(bg)
 		//bordes.crear()
 	}
 	
 	method chocasteConJugador(){
+		mundo.cancion().stop()
 		self.configIsla()
 		self.cargar()
 	}
 	
 	method cargar(){
-		game.sound(cancion).play()
+		cancion.play()
 		bordes.crearRio(20, 21, 0)
 		bordes.crearRio(20, 22, 0)
 		bordes.crearRio(20, 23, 0)
@@ -101,7 +106,9 @@ class Enemigo {
 	const bloqueInvisible = new BloqueInvisibleEnemigo(position = game.at(self.position().x(), self.position().y() + 1), enemigo = self)
 	
 	method bloqueInvisible() = bloqueInvisible
+	
 	method position() = position
+	
 	method nombre() = nombre
 	
 	method vivoAFalse() {
@@ -110,6 +117,7 @@ class Enemigo {
 	
 	method morir() {
 		self.vivoAFalse()
+		game.sound("morirEnemigo.mp3").play()
 		self.image("muerte.png")
 		game.removeTickEvent("movimiento " + nombre)
 		game.schedule(3000, {game.removeVisual(self)})
@@ -167,6 +175,7 @@ class Boss inherits Enemigo { // cuando pierde una vida tira proyectiles mas rap
 		if (vida == 0) {
 			self.morir()
 		} else {
+			game.sound("perderVidaBoss.mp3").play()
 			game.say(self, "nice shot bro, pero me queda otra vida")
 			self.enojarse()
 		}
@@ -185,6 +194,7 @@ class Boss inherits Enemigo { // cuando pierde una vida tira proyectiles mas rap
 	
 	override method morir() {
 		self.vivoAFalse()
+		game.sound("morirEnemigo.mp3").play()
 		self.image("muerte.png")
 		game.removeTickEvent("movimiento boss enojado")
 		game.schedule(3000, {game.removeVisual(self)})
@@ -217,7 +227,9 @@ class Proyectil {
 	const nombre
 	
 	method position() = position
+	
 	method image() = "bala.png"
+	
 	method nombre() = nombre 
 
 	method mover() {

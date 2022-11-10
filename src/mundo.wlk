@@ -9,10 +9,15 @@ object mundo {
 
 	const property islasOriginales = [ islaEnemigos, islaLaberinto, islaPreguntas ]
 	const islas = [ islaEnemigos, islaLaberinto, islaPreguntas ]
-	var property image = "trofeo.png" // que sea un barquito asi cuando pasa por encima vuelve al mundo principal y queda re facha
+	var property image = "trofeo.png"
 	var property position
+	const cancion = game.sound("mainSound.mp3")
 
 	method islas() = islas
+	
+	method bloquesInvisibles() = null
+	// estos dos methods son para que no me tire warnings innecesarias
+	method agregarBloques() {}
 
 	method mostrarIslas() {
 		self.islas().forEach({ isla =>
@@ -24,20 +29,21 @@ object mundo {
 
 	method estanTodasCompletadas() = islasOriginales.all({ isla => isla.estaCompletada() })
 
-	method completarIsla() {
-	}
+	method completarIsla() {}
 
 	method estaCompletada() = true
+	
+	method cancion() = cancion
 
 	method configIsla() {
 		stats.cambiarPersonaje(new Personaje(imagenOriginal = "barco.png", position = game.at(15, 10), positionAnterior = null)) // cambia el personaje del jugador
 		configBasicaIsla.configuraciones(self)
 		self.mostrarIslas()
 		fondo.image("fondoMar.png")
+		game.schedule(500, {game.sound("mainSound.mp3").play()})
 	}
 
 	method cargar() {
-		game.sound("mainSound.mp3").play()
 		if (self.estanTodasCompletadas()) {
 			game.addVisual(moneda)
 			game.say(stats.personajeActual(), "Si agarro esa moneda brillante GANO!")
@@ -47,6 +53,7 @@ object mundo {
 	method chocasteConJugador() {
 		game.clear()
 		stats.islaActual().completarIsla()
+		stats.islaActual().cancion().stop()
 		islas.remove(stats.islaActual())
 		islas.add(new Tick(position = stats.islaActual().position()))
 		game.sound("agarrarTrofeo.mp3").play()
@@ -54,8 +61,7 @@ object mundo {
 		self.cargar()
 	}
 
-	method chocasteConPiedra() {
-	}
+	method chocasteConPiedra() {}
 
 	method ganaste() {
 		if (self.estanTodasCompletadas()) {
@@ -66,11 +72,10 @@ object mundo {
 			game.sound("ganar.mp3").play()
 		}
 	}
-
 }
 
 object configBasicaIsla {
-
+	
 	method configuraciones(isla) {
 		game.clear()
 		game.addVisual(fondo)
@@ -79,7 +84,6 @@ object configBasicaIsla {
 		config.configuracionesTecnicas()
 		config.actions()
 	}
-
 }
 
 object moneda {
